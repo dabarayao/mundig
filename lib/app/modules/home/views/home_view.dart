@@ -19,15 +19,15 @@ class HomeView extends GetView<HomeController> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    FutureBuilder<List<Photo>>(
-      future: fetchPhotos(http.Client()),
+    FutureBuilder<List<Country>>(
+      future: fetchCountries(http.Client()),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Center(
             child: Text('An error has occurred!'),
           );
         } else if (snapshot.hasData) {
-          return PhotosList(photos: snapshot.data!);
+          return CountriesList(countries: snapshot.data!);
         } else {
           return const Center(
             child: CircularProgressIndicator(),
@@ -123,22 +123,22 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-class PhotosList extends StatelessWidget {
-  PhotosList({super.key, required this.photos});
+class CountriesList extends StatelessWidget {
+  CountriesList({super.key, required this.countries});
 
-  List<Photo> photos;
+  List<Country> countries;
 
   @override
   Widget build(BuildContext context) {
-    photos.sort((a, b) => a.name.compareTo(b.name));
+    countries.sort((a, b) => a.name.compareTo(b.name));
 
     return ListView.builder(
-      itemCount: photos.length,
+      itemCount: countries.length,
       itemBuilder: (context, index) {
         return ListTile(
-            leading: Image.network(photos[index].flags as String,
+            leading: Image.network(countries[index].flags as String,
                 width: 60, height: 60),
-            title: Text("${utf8.decode(photos[index].name.runes.toList())}"),
+            title: Text("${utf8.decode(countries[index].name.runes.toList())}"),
             trailing: IconButton(
                 onPressed: () {}, icon: const Icon(Icons.remove_red_eye)));
       },
