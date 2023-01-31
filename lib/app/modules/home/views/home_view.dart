@@ -11,29 +11,61 @@ import '../controllers/home_controller.dart';
 
 final translator = GoogleTranslator();
 
+final HomeController contHome = Get.put(HomeController());
+
 class HomeView extends GetView<HomeController> {
   HomeView({Key? key}) : super(key: key);
 
-  final HomeController contHome = Get.put(HomeController());
-
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   final List<Widget> _widgetOptions = <Widget>[
-    FutureBuilder<List<Country>>(
-      future: fetchCountries(http.Client()),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Center(
-            child: Text('An error has occurred!'),
-          );
-        } else if (snapshot.hasData) {
-          return CountriesList(countries: snapshot.data!);
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
+    Stack(
+      fit: StackFit.expand,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(15.0),
+          child: TextField(
+            decoration: const InputDecoration(
+              filled: true,
+              fillColor: Color(0xFFDCDCDC),
+              suffixIcon: Icon(Icons.search, color: Colors.grey),
+              border: UnderlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  borderSide: BorderSide.none),
+              hintText: 'Recherche',
+            ),
+            onChanged: (content) {
+              contHome.countryList.value = fetchCountries(http.Client());
+              contHome.globalSearch.value = content;
+            },
+          ),
+        ),
+        Positioned(
+          top: 70,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Obx(
+            () => FutureBuilder<List<Country>>(
+              future: contHome.countryList.value,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('An error has occurred!'),
+                  );
+                } else if (snapshot.hasData) {
+                  return CountriesList(countries: snapshot.data!);
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(color: Color(0xFFB34CF3)),
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+      ],
     ),
     const Center(
       child: Text(
@@ -131,9 +163,13 @@ class CountriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     countries.sort((a, b) => a.name.compareTo(b.name));
+    countries.retainWhere((country) => country.name
+        .toLowerCase()
+        .contains(contHome.globalSearch.value.toLowerCase()));
 
     return ListView.builder(
       itemCount: countries.length,
+      shrinkWrap: true,
       itemBuilder: (context, index) {
         return ListTile(
             leading: Image.network(countries[index].flags as String,
@@ -143,5 +179,9 @@ class CountriesList extends StatelessWidget {
                 onPressed: () {}, icon: const Icon(Icons.remove_red_eye)));
       },
     );
+    //  countries[index]
+    //         .name
+    //         .toLowerCase()
+    //         .contains(globalSearch.value.text.toLowerCase()) ;
   }
 }
