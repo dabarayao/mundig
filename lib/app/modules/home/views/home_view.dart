@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:translator/translator.dart';
 
 import '../controllers/home_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:skeletons/skeletons.dart';
 
 final translator = GoogleTranslator();
 
@@ -57,9 +59,19 @@ class HomeView extends GetView<HomeController> {
                 } else if (snapshot.hasData) {
                   return CountriesList(countries: snapshot.data!);
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(color: Color(0xFFB34CF3)),
-                  );
+                  return Skeleton(
+                      isLoading: true,
+                      skeleton: SkeletonListView(
+                        scrollable: true,
+                        itemBuilder: (context, index) => SkeletonListTile(
+                          hasSubtitle: false,
+                        ),
+                      ),
+                      child: const Text("Loading..."));
+
+                  // const Center(
+                  //   child: CircularProgressIndicator(color: Color(0xFFB34CF3)),
+                  // );
                 }
               },
             ),
@@ -67,11 +79,10 @@ class HomeView extends GetView<HomeController> {
         ),
       ],
     ),
-    const Center(
-      child: Text(
-        'Index 1: Business',
-        style: optionStyle,
-      ),
+    Skeleton(
+      isLoading: true,
+      skeleton: SkeletonListView(),
+      child: Container(child: Center(child: Text("Content"))),
     ),
     const Center(
       child: Text(
@@ -172,8 +183,17 @@ class CountriesList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return ListTile(
-            leading: Image.network(countries[index].flags as String,
-                width: 60, height: 60),
+            leading: CachedNetworkImage(
+                imageUrl: countries[index].flags,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    const Skeleton(
+                        isLoading: true,
+                        skeleton: SkeletonAvatar(style: SkeletonAvatarStyle(width: 60)),
+                        child: Text("Loading...")),
+                errorWidget: (context, url, error) =>
+                    Image.asset("pictures/default_country.png"),
+                width: 60,
+                height: 60),
             title: Text("${utf8.decode(countries[index].name.runes.toList())}"),
             trailing: IconButton(
                 onPressed: () {}, icon: const Icon(Icons.remove_red_eye)));
