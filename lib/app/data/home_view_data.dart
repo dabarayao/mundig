@@ -24,12 +24,31 @@ class Country {
   final String nameFra;
   final String nameSpa;
   final String flags;
+  final capital;
+  final String continent;
+  final currency;
+  final tld;
+  final languages;
+  final population;
+  final coatOfArms;
+  final dialingCode;
+  final maps;
 
-  const Country(
-      {required this.flags,
-      required this.nameFra,
-      required this.nameSpa,
-      required this.name});
+  const Country({
+    required this.flags,
+    required this.nameFra,
+    required this.nameSpa,
+    required this.name,
+    required this.capital,
+    required this.continent,
+    required this.currency,
+    required this.tld,
+    required this.languages,
+    required this.population,
+    required this.coatOfArms,
+    required this.dialingCode,
+    required this.maps,
+  });
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
@@ -37,6 +56,15 @@ class Country {
       nameFra: json['translations']['fra']['common'] as String,
       nameSpa: json['translations']['spa']['common'] as String,
       flags: json['flags']['png'] as String,
+      capital: json['capital'],
+      continent: json['region'] as String,
+      currency: json['currencies'],
+      tld: json['tld'],
+      languages: json['languages'],
+      population: json['population'],
+      coatOfArms: json['coatOfArms']["png"],
+      dialingCode: json['idd'],
+      maps: json['maps']["googleMaps"],
     );
   }
 }

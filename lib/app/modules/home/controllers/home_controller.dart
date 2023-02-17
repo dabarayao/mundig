@@ -47,7 +47,12 @@ class HomeController extends GetxController {
   void increment() => count.value++;
 
   void onItemTapped(int index) {
+    globalSearch.value = globalSearch.value;
     selectedIndex.value = index;
+  }
+
+  String utf(str) {
+    return utf8.decode(str.runes.toList());
   }
 
   // int get selectedIndex {

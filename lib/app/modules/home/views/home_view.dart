@@ -28,6 +28,8 @@ class HomeView extends GetView<HomeController> {
         Padding(
           padding: EdgeInsets.all(15.0),
           child: TextField(
+            controller:
+                TextEditingController(text: contHome.globalSearch.value),
             decoration: const InputDecoration(
               filled: true,
               fillColor: Color(0xFFDCDCDC),
@@ -57,7 +59,19 @@ class HomeView extends GetView<HomeController> {
                     child: Text('An error has occurred!'),
                   );
                 } else if (snapshot.hasData) {
-                  return CountriesList(countries: snapshot.data!);
+                  if (snapshot.data!.isEmpty) {
+                    return Skeleton(
+                        isLoading: true,
+                        skeleton: SkeletonListView(
+                          scrollable: true,
+                          itemBuilder: (context, index) => SkeletonListTile(
+                            hasSubtitle: false,
+                          ),
+                        ),
+                        child: const Text("Loading..."));
+                  } else {
+                    return CountriesList(countries: snapshot.data!);
+                  }
                 } else {
                   return Skeleton(
                       isLoading: true,
@@ -176,29 +190,49 @@ class CountriesList extends StatelessWidget {
     countries.sort((a, b) => a.name.compareTo(b.name));
     countries.retainWhere((country) => country.name
         .toLowerCase()
-        .contains(contHome.globalSearch.value.toLowerCase()));
+        .trim()
+        .contains(contHome.globalSearch.value.toLowerCase().trim()));
 
-    return ListView.builder(
-      itemCount: countries.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return ListTile(
-            leading: CachedNetworkImage(
-                imageUrl: countries[index].flags,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    const Skeleton(
-                        isLoading: true,
-                        skeleton: SkeletonAvatar(style: SkeletonAvatarStyle(width: 60)),
-                        child: Text("Loading...")),
-                errorWidget: (context, url, error) =>
-                    Image.asset("pictures/default_country.png"),
-                width: 60,
-                height: 60),
-            title: Text("${utf8.decode(countries[index].name.runes.toList())}"),
-            trailing: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.remove_red_eye)));
-      },
-    );
+    return countries.length != 0
+        ? ListView.builder(
+            itemCount: countries.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return ListTile(
+                  onTap: () => Get.toNamed("/country", arguments: {
+                        'countryName': countries[index].name,
+                        'flag': countries[index].flags,
+                        'capital': countries[index].capital,
+                        'continent': countries[index].continent,
+                        'currency': countries[index].currency,
+                        'tld': countries[index].tld,
+                        'languages': countries[index].languages,
+                        'population': countries[index].population,
+                        'coatOfArms': countries[index].coatOfArms,
+                        'dialingCode': countries[index].dialingCode,
+                        'maps': countries[index].maps
+                      }),
+                  leading: CachedNetworkImage(
+                      imageUrl: countries[index].flags,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => const Skeleton(
+                              isLoading: true,
+                              skeleton: SkeletonAvatar(
+                                  style: SkeletonAvatarStyle(width: 60)),
+                              child: Text("Loading...")),
+                      errorWidget: (context, url, error) =>
+                          Image.asset("pictures/default_country.png"),
+                      width: 60,
+                      height: 60),
+                  title: Text(contHome.utf(countries[index].name)),
+                  trailing: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.favorite_border)));
+            },
+          )
+        : Center(
+            child: Expanded(child: Image.asset("pictures/no_result_en.png")));
+
     //  countries[index]
     //         .name
     //         .toLowerCase()
