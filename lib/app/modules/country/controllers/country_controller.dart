@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 class CountryController extends GetxController {
   //TODO: Implement CountryController
 
+  var checkInternet = true.obs;
+
   final count = 0.obs;
 
   @override

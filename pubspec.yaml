@@ -17,6 +17,10 @@ dependencies:
   skeletons: ^0.0.3
   get_cli: ^0.2.30
   webviewx_plus: ^0.3.2
+  font_awesome_flutter: ^10.4.0
+  internet_connection_checker_plus: ^1.0.1
+  connectivity_widget: ^1.0.0
+  animated_widgets: ^1.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -29,4 +33,9 @@ flutter:
   assets:
     - pictures/default_country.png # The default country flag
     - pictures/no_result_en.png # No result picture english version
-
+    - pictures/Africa.png
+    - pictures/Americas.png
+    - pictures/Antarctic.png
+    - pictures/Asie.png
+    - pictures/Europa.png
+    - pictures/Oceania.png

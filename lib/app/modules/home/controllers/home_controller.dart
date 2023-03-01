@@ -24,15 +24,21 @@ class HomeController extends GetxController {
   //         ),
   //       ),
 
-  final count = 0.obs;
+  var checkInternet = false.obs;
+
   var darkMode = false.obs;
   var selectedIndex = 0.obs;
   var globalSearch = "".obs;
+  var globalSearchCategory = "".obs;
+  var countryAmericas = "".obs;
+
   var countryList = fetchCountries(http.Client()).obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  var countryCategoryList = fetchCountries(http.Client()).obs;
+
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   @override
   void onReady() {
@@ -43,8 +49,6 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 
   void onItemTapped(int index) {
     globalSearch.value = globalSearch.value;

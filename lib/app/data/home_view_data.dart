@@ -1,14 +1,40 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:get/get.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+
+var nbAmericas = 0.obs;
+var nbEurope = 0.obs;
+var nbAfrica = 0.obs;
+var nbAsia = 0.obs;
+var nbOceania = 0.obs;
+var nbAntarctic = 0.obs;
 
 Future<List<Country>> fetchCountries(http.Client client) async {
   final response =
       await client.get(Uri.parse('https://restcountries.com/v3.1/all'));
 
   // Use the compute function to run parseCountrys in a separate isolate.
+  var tray = jsonDecode(response.body).toList();
+  var nbAm = 0;
+
+  countCountry(val) =>
+      tray.where((row) => (row["region"].toLowerCase() == val)).length;
+
+  // for (var i = 0; i < tray.length; i++) {
+  //   if (tray[i]["region"].toLowerCase() == "americas") {
+  //     nbAmericas++;
+  //   }
+  // }
+  nbAmericas.value = countCountry("americas");
+  nbEurope.value = countCountry("europe");
+  nbAfrica.value = countCountry("africa");
+  nbAsia.value = countCountry("asia");
+  nbOceania.value = countCountry("oceania");
+  nbAntarctic.value = countCountry("antarctic");
+
   return compute(parseCountries, response.body);
 }
 

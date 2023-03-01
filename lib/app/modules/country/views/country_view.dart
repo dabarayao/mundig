@@ -8,6 +8,7 @@ import '../controllers/country_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 final CountryController contCountry = Get.put(CountryController());
 late WebViewXController webviewController;
@@ -16,6 +17,20 @@ class CountryView extends GetView<CountryController> {
   CountryView({Key? key}) : super(key: key);
 
   var args = Get.arguments;
+  var listener =
+      InternetConnectionCheckerPlus().onStatusChange.listen((status) {
+    switch (status) {
+      case InternetConnectionStatus.connected:
+        contCountry.checkInternet.value = true;
+        webviewController.reload();
+        print('Data connection is available.');
+        break;
+      case InternetConnectionStatus.disconnected:
+        contCountry.checkInternet.value = false;
+        print('You are disconnected from the internet.');
+        break;
+    }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -214,13 +229,31 @@ class CountryView extends GetView<CountryController> {
                         )
                       : SizedBox(),
                 ]),
-            WebViewX(
-              initialContent: args['maps'],
-              initialSourceType: SourceType.url,
-              onWebViewCreated: (controller) => webviewController = controller,
-              height: 400,
-              width: MediaQuery.of(context).size.width,
-            ),
+            Obx(() => contCountry.checkInternet.value == true
+                ? WebViewX(
+                    initialContent: args['maps'],
+                    initialSourceType: SourceType.url,
+                    onWebViewCreated: (controller) =>
+                        webviewController = controller,
+                    height: 400,
+                    width: MediaQuery.of(context).size.width,
+                    onPageFinished: (finish) {
+                      //reading response on finish
+                      print("finish is ${finish}");
+                    },
+                  )
+                : Card(
+                    color: Colors.red,
+                    child: ListTile(
+                      textColor: Colors.white,
+                      onTap: () {},
+                      title: const Text("Vérifier votre connexion internet",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20)),
+                      subtitle:
+                          Text("Géolocalisation", textAlign: TextAlign.center),
+                    ),
+                  ))
           ],
         ),
       ),
