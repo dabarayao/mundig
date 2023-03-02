@@ -3,14 +3,22 @@ import 'dart:convert';
 import 'package:get/get.dart';
 
 import 'package:flutter/foundation.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
+final box = GetStorage();
 var nbAmericas = 0.obs;
+var nbAmericasLove = 0.obs;
 var nbEurope = 0.obs;
+var nbEuropaLove = 0.obs;
 var nbAfrica = 0.obs;
+var nbAfricaLove = 0.obs;
 var nbAsia = 0.obs;
+var nbAsiaLove = 0.obs;
 var nbOceania = 0.obs;
+var nbOceaniaLove = 0.obs;
 var nbAntarctic = 0.obs;
+var nbAntarcticLove = 0.obs;
 
 Future<List<Country>> fetchCountries(http.Client client) async {
   final response =
@@ -23,6 +31,11 @@ Future<List<Country>> fetchCountries(http.Client client) async {
   countCountry(val) =>
       tray.where((row) => (row["region"].toLowerCase() == val)).length;
 
+  countCountryLove(val) => tray
+      .where((row) => (row["region"].toLowerCase() == val &&
+          box.read("favsCountries").contains(row['name']['common'])))
+      .length;
+
   // for (var i = 0; i < tray.length; i++) {
   //   if (tray[i]["region"].toLowerCase() == "americas") {
   //     nbAmericas++;
@@ -34,6 +47,13 @@ Future<List<Country>> fetchCountries(http.Client client) async {
   nbAsia.value = countCountry("asia");
   nbOceania.value = countCountry("oceania");
   nbAntarctic.value = countCountry("antarctic");
+
+  nbAmericasLove.value = countCountryLove("americas");
+  nbEuropaLove.value = countCountryLove("europe");
+  nbAfricaLove.value = countCountryLove("africa");
+  nbAsiaLove.value = countCountryLove("asia");
+  nbOceaniaLove.value = countCountryLove("oceania");
+  nbAntarcticLove.value = countCountryLove("antarctic");
 
   return compute(parseCountries, response.body);
 }

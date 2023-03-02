@@ -1,9 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mundig/app/data/home_view_data.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+
+final box = GetStorage();
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -25,15 +27,18 @@ class HomeController extends GetxController {
   //       ),
 
   var checkInternet = false.obs;
+  var favArray = [...box.read('favsCountries')].obs;
 
-  var darkMode = false.obs;
+  var darkMode = box.read("theme") ? true.obs : false.obs;
   var selectedIndex = 0.obs;
   var globalSearch = "".obs;
+  var globalSearchFav = "".obs;
   var globalSearchCategory = "".obs;
   var countryAmericas = "".obs;
 
   var countryList = fetchCountries(http.Client()).obs;
   var countryCategoryList = fetchCountries(http.Client()).obs;
+  var countryFavList = fetchCountries(http.Client()).obs;
 
   // @override
   // void onInit() {
@@ -51,7 +56,6 @@ class HomeController extends GetxController {
   }
 
   void onItemTapped(int index) {
-    globalSearch.value = globalSearch.value;
     selectedIndex.value = index;
   }
 

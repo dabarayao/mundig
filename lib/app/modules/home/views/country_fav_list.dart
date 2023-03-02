@@ -16,8 +16,8 @@ import 'package:http/http.dart' as http;
 final HomeController contHome = Get.put(HomeController());
 final box = GetStorage();
 
-class CountryListView extends GetView<HomeController> {
-  CountryListView({Key? key}) : super(key: key);
+class CountryFavListView extends GetView<HomeController> {
+  CountryFavListView({Key? key}) : super(key: key);
   var i = 0;
 
   @override
@@ -27,7 +27,7 @@ class CountryListView extends GetView<HomeController> {
       switch (status) {
         case InternetConnectionStatus.connected:
           contHome.checkInternet.value = false;
-          contHome.countryList.value = fetchCountries(http.Client());
+          contHome.countryFavList.value = fetchCountries(http.Client());
           print('Data connection is available.');
           break;
         case InternetConnectionStatus.disconnected:
@@ -37,37 +37,48 @@ class CountryListView extends GetView<HomeController> {
       }
     });
 
+    contHome.countryFavList.value = fetchCountries(http.Client());
+
+    box.listenKey('favsCountries', (value) {
+      contHome.countryFavList.value = fetchCountries(http.Client());
+    });
+
     return Stack(
       fit: StackFit.expand,
       children: [
-        Padding(
-          padding: EdgeInsets.all(15.0),
-          child: TextField(
-            controller:
-                TextEditingController(text: contHome.globalSearch.value),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Color(0xFFDCDCDC).withOpacity(0.2),
-              suffixIcon: Icon(Icons.search, color: Colors.grey),
-              border: UnderlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  borderSide: BorderSide.none),
-              hintText: 'Recherche',
+        Obx(
+          () => Visibility(
+            visible: contHome.favArray.length != 0 ? true : false,
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: TextField(
+                controller:
+                    TextEditingController(text: contHome.globalSearchFav.value),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color(0xFFDCDCDC).withOpacity(0.2),
+                  suffixIcon: Icon(Icons.search, color: Colors.grey),
+                  border: const UnderlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      borderSide: BorderSide.none),
+                  hintText: 'Recherche',
+                ),
+                onChanged: (content) {
+                  contHome.countryFavList.value = fetchCountries(http.Client());
+                  contHome.globalSearchFav.value = content;
+                },
+              ),
             ),
-            onChanged: (content) {
-              contHome.countryList.value = fetchCountries(http.Client());
-              contHome.globalSearch.value = content;
-            },
           ),
         ),
         Obx(
           () => Positioned(
-            top: 70,
+            top: contHome.favArray.isNotEmpty ? 70 : 0,
             left: 0,
             right: 0,
             bottom: contHome.checkInternet.value ? 15 : 0,
             child: FutureBuilder<List<Country>>(
-              future: contHome.countryList.value,
+              future: contHome.countryFavList.value,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return const Center(
@@ -86,7 +97,7 @@ class CountryListView extends GetView<HomeController> {
                         ),
                         child: const Text("Loading..."));
                   } else {
-                    return CountriesList(countries: snapshot.data!);
+                    return CountriesFavList(countries: snapshot.data!);
                   }
                 } else {
                   return Skeleton(
@@ -152,8 +163,8 @@ class CountryListView extends GetView<HomeController> {
   }
 }
 
-class CountriesList extends StatelessWidget {
-  CountriesList({super.key, required this.countries});
+class CountriesFavList extends StatelessWidget {
+  CountriesFavList({super.key, required this.countries});
 
   List<Country> countries;
 
@@ -164,10 +175,13 @@ class CountriesList extends StatelessWidget {
         country.name
             .toLowerCase()
             .trim()
-            .contains(contHome.globalSearch.value.toLowerCase().trim()) ||
+            .contains(contHome.globalSearchFav.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
             "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}"
-                .contains(contHome.globalSearch.value.toLowerCase().trim()));
+                .contains(contHome.globalSearchFav.value.toLowerCase().trim()));
+
+    countries.retainWhere(
+        (country) => box.read('favsCountries').contains(country.name));
 
     return countries.length != 0
         ? ListView.builder(
@@ -175,42 +189,34 @@ class CountriesList extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return ListTile(
-                onTap: () => Get.toNamed("/country", arguments: {
-                  'countryName': countries[index].name,
-                  'flag': countries[index].flags,
-                  'capital': countries[index].capital,
-                  'continent': countries[index].continent,
-                  'currency': countries[index].currency,
-                  'tld': countries[index].tld,
-                  'languages': countries[index].languages,
-                  'population': countries[index].population,
-                  'coatOfArms': countries[index].coatOfArms,
-                  'dialingCode': countries[index].dialingCode,
-                  'maps': countries[index].maps
-                }),
-                leading: CachedNetworkImage(
-                    imageUrl: countries[index].flags,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => const Skeleton(
-                            isLoading: true,
-                            skeleton: SkeletonAvatar(
-                                style: SkeletonAvatarStyle(width: 60)),
-                            child: Text("Loading...")),
-                    errorWidget: (context, url, error) =>
-                        Image.asset("pictures/default_country.png"),
-                    width: 60,
-                    height: 60),
-                title: Text(contHome.utf(countries[index].name)),
-                trailing: Obx(() => IconButton(
-                    onPressed: () {
-                      if (contHome.favArray.contains(countries[index].name) ==
-                          false) {
-                        box.write('favsCountries',
-                            [...contHome.favArray, countries[index].name]);
-                        contHome.favArray.value = [
-                          ...box.read('favsCountries')
-                        ];
-                      } else {
+                  onTap: () => Get.toNamed("/country", arguments: {
+                        'countryName': countries[index].name,
+                        'flag': countries[index].flags,
+                        'capital': countries[index].capital,
+                        'continent': countries[index].continent,
+                        'currency': countries[index].currency,
+                        'tld': countries[index].tld,
+                        'languages': countries[index].languages,
+                        'population': countries[index].population,
+                        'coatOfArms': countries[index].coatOfArms,
+                        'dialingCode': countries[index].dialingCode,
+                        'maps': countries[index].maps
+                      }),
+                  leading: CachedNetworkImage(
+                      imageUrl: countries[index].flags,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => const Skeleton(
+                              isLoading: true,
+                              skeleton: SkeletonAvatar(
+                                  style: SkeletonAvatarStyle(width: 60)),
+                              child: Text("Loading...")),
+                      errorWidget: (context, url, error) =>
+                          Image.asset("pictures/default_country.png"),
+                      width: 60,
+                      height: 60),
+                  title: Text(contHome.utf(countries[index].name)),
+                  trailing: IconButton(
+                      onPressed: () {
                         var favs = box.read('favsCountries');
                         favs.removeWhere(
                             (item) => item == countries[index].name);
@@ -218,18 +224,13 @@ class CountriesList extends StatelessWidget {
                         contHome.favArray.value = [
                           ...box.read('favsCountries')
                         ];
-                      }
-                      contHome.countryList.value =
-                          fetchCountries(http.Client());
-                    },
-                    icon: contHome.favArray.contains(countries[index].name)
-                        ? Icon(Icons.favorite, color: Color(0xFFF2B538))
-                        : Icon(Icons.favorite_border))),
-              );
+                        contHome.countryFavList.value =
+                            fetchCountries(http.Client());
+                      },
+                      icon: Icon(Icons.favorite, color: Color(0xFFF2B538))));
             },
           )
-        : Center(
-            child: Expanded(child: Image.asset("pictures/no_result_en.png")));
+        : Center(child: Expanded(child: Image.asset("pictures/empty_en.png")));
 
     //  countries[index]
     //         .name
