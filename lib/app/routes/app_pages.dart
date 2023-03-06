@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/about/bindings/about_binding.dart';
+import '../modules/about/views/about_view.dart';
 import '../modules/country/bindings/country_binding.dart';
 import '../modules/country/views/country_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.COUNTRY,
       page: () => CountryView(),
       binding: CountryBinding(),
+    ),
+    GetPage(
+      name: _Paths.ABOUT,
+      page: () => const AboutView(),
+      binding: AboutBinding(),
     ),
   ];
 }

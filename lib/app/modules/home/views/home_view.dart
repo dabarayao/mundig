@@ -38,21 +38,9 @@ class HomeView extends GetView<HomeController> {
         actions: [
           IconButton(
               onPressed: () {
-                // if (Get.isDarkMode) {
-                //   Get.changeTheme(ThemeData.light());
-                //   contHome.darkMode.value = false;
-                // } else {
-                //   Get.changeTheme(ThemeData.dark());
-                //   contHome.darkMode.value = true;
-                // }
+                Get.toNamed("/about");
               },
-              icon: const Icon(Icons.info_outline, color: Colors.white)
-              // Icon(
-              // contHome.darkMode.value
-              //     ? Icons.brightness_4
-              //     : Icons.brightness_3,
-              // color: Colors.white),
-              )
+              icon: const Icon(Icons.info_outline, color: Colors.white))
         ],
       ),
       body: Obx(() => _widgetOptions.elementAt(contHome.selectedIndex.value)),
@@ -64,15 +52,15 @@ class HomeView extends GetView<HomeController> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.category),
-                label: 'Catégories',
+                label: 'Categories',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.favorite),
-                label: 'Favoris',
+                label: 'Favorites',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
-                label: 'Paramètres',
+                label: 'Settings',
               ),
             ],
             currentIndex: contHome.selectedIndex.value,

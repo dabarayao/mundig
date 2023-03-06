@@ -603,7 +603,7 @@ class CountryCategoryView extends GetView<HomeController> {
                 border: UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide.none),
-                hintText: 'Recherche',
+                hintText: 'Search',
               ),
               onChanged: (content) {
                 contHome.countryCategoryList.value =

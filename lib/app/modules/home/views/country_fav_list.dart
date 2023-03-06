@@ -46,28 +46,26 @@ class CountryFavListView extends GetView<HomeController> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Obx(
-          () => Visibility(
-            visible: contHome.favArray.length != 0 ? true : false,
-            child: Padding(
-              padding: EdgeInsets.all(15.0),
-              child: TextField(
-                controller:
-                    TextEditingController(text: contHome.globalSearchFav.value),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color(0xFFDCDCDC).withOpacity(0.2),
-                  suffixIcon: Icon(Icons.search, color: Colors.grey),
-                  border: const UnderlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                      borderSide: BorderSide.none),
-                  hintText: 'Recherche',
-                ),
-                onChanged: (content) {
-                  contHome.countryFavList.value = fetchCountries(http.Client());
-                  contHome.globalSearchFav.value = content;
-                },
+        Visibility(
+          visible: contHome.favArray.length != 0 ? true : false,
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: TextField(
+              controller:
+                  TextEditingController(text: contHome.globalSearchFav.value),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color(0xFFDCDCDC).withOpacity(0.2),
+                suffixIcon: Icon(Icons.search, color: Colors.grey),
+                border: const UnderlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    borderSide: BorderSide.none),
+                hintText: 'Search',
               ),
+              onChanged: (content) {
+                contHome.countryFavList.value = fetchCountries(http.Client());
+                contHome.globalSearchFav.value = content;
+              },
             ),
           ),
         ),

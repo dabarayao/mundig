@@ -10,21 +10,7 @@ final box = GetStorage();
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
-  // Padding(
-  //         padding: EdgeInsets.all(15.0),
-  //         child: TextField(
-  //           controller: contHome.globalSearch.value,
-  //           decoration: const InputDecoration(
-  //             filled: true,
-  //             fillColor: Color(0xFFDCDCDC),
-  //             suffixIcon: Icon(Icons.search, color: Colors.grey),
-  //             border: UnderlineInputBorder(
-  //                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
-  //                 borderSide: BorderSide.none),
-  //             hintText: 'Recherche',
-  //           ),
-  //         ),
-  //       ),
+
 
   var checkInternet = false.obs;
   var favArray = [...box.read('favsCountries')].obs;
