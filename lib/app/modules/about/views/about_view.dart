@@ -12,7 +12,7 @@ class AboutView extends GetView<AboutController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About'),
+        title: Text('About'.tr),
         centerTitle: true,
         backgroundColor: const Color(0xFF63308E),
       ),
@@ -36,9 +36,9 @@ It displays all country in the world and make it possible to have the main infor
                 )),
             ListTile(
               onTap: () {
-                  // add the [https]
-                  launchUrl(Uri.parse("tel:+2250779549937")); // new line
-          
+                // add the [https]
+                // launchUrl(Uri.parse("tel:+2250779549937")); // new line
+                Get.updateLocale(const Locale('fr', 'FR'));
               },
               leading: const Icon(
                 Icons.info,

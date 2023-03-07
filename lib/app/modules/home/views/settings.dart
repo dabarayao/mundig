@@ -36,8 +36,9 @@ class SettingsView extends GetView<HomeController> {
                               "French",
                             ),
                             value: "fr",
-                            groupValue: "en",
+                            groupValue: "fr",
                             onChanged: (value) {
+                              box.write("langui", "fr");
                               Navigator.pop(context);
                             },
                           ),
@@ -45,8 +46,19 @@ class SettingsView extends GetView<HomeController> {
                             activeColor: Color(0xFFF2B538),
                             title: Text("English"),
                             value: "en",
-                            groupValue: "en",
+                            groupValue: "fr",
                             onChanged: (value) {
+                              box.write("langui", "en");
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            activeColor: Color(0xFFF2B538),
+                            title: Text("Spanish"),
+                            value: "en",
+                            groupValue: "fr",
+                            onChanged: (value) {
+                              box.write("langui", "en");
                               Navigator.pop(context);
                             },
                           )

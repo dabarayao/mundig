@@ -10,12 +10,11 @@ final box = GetStorage();
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
-
-
   var checkInternet = false.obs;
   var favArray = [...box.read('favsCountries')].obs;
 
   var darkMode = box.read("theme") ? true.obs : false.obs;
+
   var selectedIndex = 0.obs;
   var globalSearch = "".obs;
   var globalSearchFav = "".obs;
