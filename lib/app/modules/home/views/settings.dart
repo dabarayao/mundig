@@ -119,7 +119,7 @@ class SettingsView extends GetView<HomeController> {
           onTap: () {
             Share.share(
               """${"Mundig - Travel without move".tr} :
-https://drive.google.com/file/d/1uJSRN8-ppPbKuzkVu0AhJg9Xf9o5LEB0/view?usp=share_link""",
+https://drive.google.com/drive/folders/1TzK3KVLNjSReEmJaYOePnGf8wMkbaref?usp=share_link""",
             );
           },
           leading: Icon(
