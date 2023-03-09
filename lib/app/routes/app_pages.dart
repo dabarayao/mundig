@@ -9,7 +9,6 @@ import '../modules/home/views/home_view.dart';
 
 part 'app_routes.dart';
 
-
 class AppPages {
   AppPages._();
 

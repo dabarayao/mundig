@@ -6,25 +6,32 @@ import 'package:get_storage/get_storage.dart';
 import 'app/routes/app_pages.dart';
 import 'languages.dart';
 
+
 void main() async {
   await GetStorage.init();
 
-  final box = GetStorage();
-  var darkMode = box.read("theme");
-  var langui = box.read("langui") == null
-      ? const Locale('en', 'US')
-      : box.read("langui") == "fr"
-          ? const Locale('fr', 'FR')
-          : box.read("langui") == "es"
-              ? const Locale('es', 'US')
-              : const Locale('en', 'US');
+  runApp(MyApp());
+}
 
-  box.read("favsCountries") ?? box.write("favsCountries", []);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  print(Get.deviceLocale);
+  @override
+  Widget build(BuildContext context) {
+    final box = GetStorage();
+    var darkMode = box.read("theme");
+    var langui = box.read("langui") == null
+        ? const Locale('en', 'US')
+        : box.read("langui") == "fr"
+            ? const Locale('fr', 'FR')
+            : box.read("langui") == "es"
+                ? const Locale('es', 'US')
+                : const Locale('en', 'US');
 
-  runApp(
-    GetMaterialApp(
+    box.read("favsCountries") ?? box.write("favsCountries", []);
+
+    print(Get.deviceLocale);
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       translations: Languages(),
       locale: langui,
@@ -32,6 +39,6 @@ void main() async {
       title: "Mundig",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-    ),
-  );
+    );
+  }
 }

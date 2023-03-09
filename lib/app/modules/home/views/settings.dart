@@ -76,7 +76,17 @@ class SettingsView extends GetView<HomeController> {
           title: Text('Languages'.tr),
         ),
         ListTile(
-            onTap: () {},
+            onTap: () {
+              if (Get.isDarkMode) {
+                box.write("theme", false);
+                Get.changeTheme(ThemeData.light());
+                contHome.darkMode.value = false;
+              } else {
+                box.write("theme", true);
+                Get.changeTheme(ThemeData.dark());
+                contHome.darkMode.value = true;
+              }
+            },
             leading: Icon(Icons.color_lens_outlined),
             title: Text('Dark theme'.tr),
             trailing:
@@ -109,7 +119,7 @@ class SettingsView extends GetView<HomeController> {
           onTap: () {
             Share.share(
               """${"Mundig - Travel without move".tr} :
-https://drive.google.com/file/d/14PYIXEOjtdc8pdJNub8XmE1q_0d0pTrN/view?usp=share_link""",
+https://drive.google.com/file/d/1uJSRN8-ppPbKuzkVu0AhJg9Xf9o5LEB0/view?usp=share_link""",
             );
           },
           leading: Icon(

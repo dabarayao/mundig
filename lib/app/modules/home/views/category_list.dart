@@ -622,8 +622,10 @@ class CountryCategoryView extends GetView<HomeController> {
                 future: contHome.countryCategoryList.value,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('An error has occurred!'),
+                    return Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Expanded(
+                          child: Image.asset("pictures/no_internet.png")),
                     );
                   } else if (snapshot.hasData) {
                     if (snapshot.data!.isEmpty) {
