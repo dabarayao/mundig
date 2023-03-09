@@ -11,6 +11,14 @@ void main() async {
 
   final box = GetStorage();
   var darkMode = box.read("theme");
+  var langui = box.read("langui") == null
+      ? const Locale('en', 'US')
+      : box.read("langui") == "fr"
+          ? const Locale('fr', 'FR')
+          : box.read("langui") == "es"
+              ? const Locale('es', 'US')
+              : const Locale('en', 'US');
+
   box.read("favsCountries") ?? box.write("favsCountries", []);
 
   print(Get.deviceLocale);
@@ -19,8 +27,7 @@ void main() async {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       translations: Languages(),
-      locale: Get.deviceLocale,
-      fallbackLocale: const Locale('fr', 'FR'),
+      locale: langui,
       theme: darkMode ? ThemeData.dark() : ThemeData.light(),
       title: "Mundig",
       initialRoute: AppPages.INITIAL,

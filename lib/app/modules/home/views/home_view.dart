@@ -45,22 +45,22 @@ class HomeView extends GetView<HomeController> {
       ),
       body: Obx(() => _widgetOptions.elementAt(contHome.selectedIndex.value)),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: 'Home',
+                label: 'Home'.tr,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.category),
-                label: 'Categories',
+                label: 'Categories'.tr,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.favorite),
-                label: 'Favorites',
+                label: 'Favorites'.tr,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
-                label: 'Settings',
+                label: 'Settings'.tr,
               ),
             ],
             currentIndex: contHome.selectedIndex.value,

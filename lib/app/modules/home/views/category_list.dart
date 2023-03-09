@@ -49,7 +49,7 @@ class CategoryListView extends GetView<HomeController> {
             InkResponse(
               onTap: () {
                 Get.to(() => CountryCategoryView(
-                    region: "Americas", title: "Countries of americas"));
+                    region: "Americas", title: "Countries of Americas".tr));
               },
               child: GridTile(
                   // header section
@@ -58,7 +58,7 @@ class CategoryListView extends GetView<HomeController> {
                       title: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Americas',
+                      'Americas'.tr,
                       style: TextStyle(
                         color: contHome.darkMode.value
                             ? Colors.white
@@ -131,14 +131,14 @@ class CategoryListView extends GetView<HomeController> {
             InkResponse(
               onTap: () {
                 Get.to(() => CountryCategoryView(
-                    region: "Europe", title: "Countries of Europe"));
+                    region: "Europe", title: "Countries of Europe".tr));
               },
               child: GridTile(
                   // header section
                   // ignore: prefer_const_constructors
                   header: GridTileBar(
                       title: Text(
-                    'Europe',
+                    'Europe'.tr,
                     style: TextStyle(
                       color:
                           contHome.darkMode.value ? Colors.white : Colors.black,
@@ -211,14 +211,14 @@ class CategoryListView extends GetView<HomeController> {
             InkResponse(
               onTap: () {
                 Get.to(() => CountryCategoryView(
-                    region: "Africa", title: "Countries of Africa"));
+                    region: "Africa", title: "Countries of Africa".tr));
               },
               child: GridTile(
                   // header section
                   // ignore: prefer_const_constructors
                   header: GridTileBar(
                       title: Text(
-                    'Africa',
+                    'Africa'.tr,
                     style: TextStyle(
                       color:
                           contHome.darkMode.value ? Colors.white : Colors.black,
@@ -291,14 +291,14 @@ class CategoryListView extends GetView<HomeController> {
             InkResponse(
               onTap: () {
                 Get.to(() => CountryCategoryView(
-                    region: "Asia", title: "Countries of Asia"));
+                    region: "Asia", title: "Countries of Asia".tr));
               },
               child: GridTile(
                   // header section
                   // ignore: prefer_const_constructors
                   header: GridTileBar(
                       title: Text(
-                    'Asia',
+                    'Asia'.tr,
                     style: TextStyle(
                       color:
                           contHome.darkMode.value ? Colors.white : Colors.black,
@@ -370,14 +370,14 @@ class CategoryListView extends GetView<HomeController> {
             InkResponse(
               onTap: () {
                 Get.to(() => CountryCategoryView(
-                    region: "Oceania", title: "Countries of Oceania"));
+                    region: "Oceania", title: "Countries of Oceania".tr));
               },
               child: GridTile(
                   // header section
                   // ignore: prefer_const_constructors
                   header: GridTileBar(
                       title: Text(
-                    'Oceania',
+                    'Oceania'.tr,
                     style: TextStyle(
                       color:
                           contHome.darkMode.value ? Colors.white : Colors.black,
@@ -450,14 +450,14 @@ class CategoryListView extends GetView<HomeController> {
             InkResponse(
               onTap: () {
                 Get.to(() => CountryCategoryView(
-                    region: "Antarctic", title: "Countries of Antarctic"));
+                    region: "Antarctic", title: "Countries of Antarctic".tr));
               },
               child: GridTile(
                   // header section
                   // ignore: prefer_const_constructors
                   header: GridTileBar(
                       title: Text(
-                    'Antarctic',
+                    'Antarctic'.tr,
                     style: TextStyle(
                       color:
                           contHome.darkMode.value ? Colors.white : Colors.black,
@@ -603,7 +603,7 @@ class CountryCategoryView extends GetView<HomeController> {
                 border: UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide.none),
-                hintText: 'Search',
+                hintText: 'Search'.tr,
               ),
               onChanged: (content) {
                 contHome.countryCategoryList.value =

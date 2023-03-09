@@ -87,7 +87,7 @@ class CountryView extends GetView<CountryController> {
                         onTap: () {},
                         title: Text(contCountry.utf(args['countryName']),
                             style: TextStyle(fontSize: 20)),
-                        subtitle: Text("Name"),
+                        subtitle: Text("Name".tr),
                       ),
                     ),
                   ),
@@ -99,7 +99,7 @@ class CountryView extends GetView<CountryController> {
                                 onTap: () {},
                                 title:
                                     Text(contCountry.utf(args['capital'][0])),
-                                subtitle: Text("Capital")),
+                                subtitle: Text("Capital".tr)),
                           ),
                         )
                       : SizedBox(),
@@ -110,7 +110,7 @@ class CountryView extends GetView<CountryController> {
                         onTap: () {},
                         title: Text(contCountry.utf(args['continent']),
                             style: TextStyle(fontSize: 20)),
-                        subtitle: Text("Continent"),
+                        subtitle: Text("Continent".tr),
                       ),
                     ),
                   ),
@@ -121,8 +121,8 @@ class CountryView extends GetView<CountryController> {
                             child: Column(
                               children: [
                                 Text(args['currency'].length > 1
-                                    ? 'Official currencies'
-                                    : 'Official currency'),
+                                    ? 'Official currencies'.tr
+                                    : 'Official currency'.tr),
                                 Column(
                                   children: args['currency']
                                       .entries
@@ -147,7 +147,7 @@ class CountryView extends GetView<CountryController> {
                         title: Text(
                             "${args['tld'][0]} (www.example${args['tld'][0]} )",
                             style: TextStyle(fontSize: 20)),
-                        subtitle: Text("Top level domain"),
+                        subtitle: Text("Top level domain".tr),
                       ),
                     ),
                   ),
@@ -158,7 +158,7 @@ class CountryView extends GetView<CountryController> {
                         onTap: () {},
                         title: Text("${args['population']} residents",
                             style: TextStyle(fontSize: 20)),
-                        subtitle: Text("Population"),
+                        subtitle: Text("Population".tr),
                       ),
                     ),
                   ),
@@ -169,8 +169,8 @@ class CountryView extends GetView<CountryController> {
                             child: Column(
                               children: [
                                 Text(args['languages'].length > 1
-                                    ? 'Official languages'
-                                    : 'Official language'),
+                                    ? 'Official languages'.tr
+                                    : 'Official language'.tr),
                                 Column(
                                   children: args['languages']
                                       .entries
@@ -190,7 +190,7 @@ class CountryView extends GetView<CountryController> {
                   args['coatOfArms'] != null
                       ? Column(
                           children: [
-                            Text("Coat of arms"),
+                            Text("Coat of arms".tr),
                             Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: SizedBox(
@@ -223,7 +223,7 @@ class CountryView extends GetView<CountryController> {
                               title: Text(
                                   "${args['dialingCode']['root']}${args['dialingCode']['suffixes'][0]}",
                                   style: TextStyle(fontSize: 20)),
-                              subtitle: Text("Dialing code"),
+                              subtitle: Text("Dialing code".tr),
                             ),
                           ),
                         )
@@ -251,7 +251,7 @@ class CountryView extends GetView<CountryController> {
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 20)),
                       subtitle:
-                          Text("Géolocalisation", textAlign: TextAlign.center),
+                          Text("Geolocation".tr, textAlign: TextAlign.center),
                     ),
                   ))
           ],

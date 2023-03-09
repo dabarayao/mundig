@@ -60,7 +60,7 @@ class CountryFavListView extends GetView<HomeController> {
                 border: const UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide.none),
-                hintText: 'Search',
+                hintText: 'Search'.tr,
               ),
               onChanged: (content) {
                 contHome.countryFavList.value = fetchCountries(http.Client());

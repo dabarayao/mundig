@@ -52,7 +52,7 @@ class CountryListView extends GetView<HomeController> {
               border: UnderlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   borderSide: BorderSide.none),
-              hintText: 'Search',
+              hintText: 'Search'.tr,
             ),
             onChanged: (content) {
               contHome.countryList.value = fetchCountries(http.Client());

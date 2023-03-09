@@ -23,15 +23,16 @@ class AboutView extends GetView<AboutController> {
           children: [
             Center(child: Image.asset("pictures/logo_mundig.png", width: 250)),
             SizedBox(width: 20),
-            const Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 """Mundig is a software created by the developer Yao Dabara Mickael. 
-It displays all country in the world and make it possible to have the main informations about each countries such as the map, the dialing code, the captial...""",
+It displays all country in the world and make it possible to have the main informations about each countries such as the map, the dialing code, the captial...""".tr
+                    .tr,
               ),
             ),
-            const Text("Developer information",
-                style: TextStyle(
+            Text("Developer information".tr,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 )),
             ListTile(

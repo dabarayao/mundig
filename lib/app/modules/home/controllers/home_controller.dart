@@ -14,6 +14,13 @@ class HomeController extends GetxController {
   var favArray = [...box.read('favsCountries')].obs;
 
   var darkMode = box.read("theme") ? true.obs : false.obs;
+  var langui = box.read("langui") == null
+      ? "en".obs
+      : box.read("langui") == "fr"
+          ? "fr".obs
+          : box.read("langui") == "es"
+              ? "es".obs
+              : "en".obs;
 
   var selectedIndex = 0.obs;
   var globalSearch = "".obs;

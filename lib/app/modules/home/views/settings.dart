@@ -36,9 +36,11 @@ class SettingsView extends GetView<HomeController> {
                               "French",
                             ),
                             value: "fr",
-                            groupValue: "fr",
+                            groupValue: contHome.langui.value,
                             onChanged: (value) {
                               box.write("langui", "fr");
+                              contHome.langui.value = "fr";
+                              Get.updateLocale(const Locale('fr', 'FR'));
                               Navigator.pop(context);
                             },
                           ),
@@ -46,19 +48,23 @@ class SettingsView extends GetView<HomeController> {
                             activeColor: Color(0xFFF2B538),
                             title: Text("English"),
                             value: "en",
-                            groupValue: "fr",
+                            groupValue: contHome.langui.value,
                             onChanged: (value) {
                               box.write("langui", "en");
+                              contHome.langui.value = "en";
+                              Get.updateLocale(const Locale('en', 'US'));
                               Navigator.pop(context);
                             },
                           ),
                           RadioListTile(
                             activeColor: Color(0xFFF2B538),
                             title: Text("Spanish"),
-                            value: "en",
-                            groupValue: "fr",
+                            value: "es",
+                            groupValue: contHome.langui.value,
                             onChanged: (value) {
-                              box.write("langui", "en");
+                              box.write("langui", "es");
+                              contHome.langui.value = "es";
+                              Get.updateLocale(const Locale('es', 'US'));
                               Navigator.pop(context);
                             },
                           )
@@ -67,12 +73,12 @@ class SettingsView extends GetView<HomeController> {
                     }));
           },
           leading: Icon(Icons.language),
-          title: Text('Language'),
+          title: Text('Languages'.tr),
         ),
         ListTile(
             onTap: () {},
             leading: Icon(Icons.color_lens_outlined),
-            title: Text('Dark theme'),
+            title: Text('Dark theme'.tr),
             trailing:
                 // IconButton(
                 //     onPressed: () {
@@ -102,14 +108,14 @@ class SettingsView extends GetView<HomeController> {
         ListTile(
           onTap: () {
             Share.share(
-              subject: "Contactup - Enregistrer et suivez vos contacts",
-              "https://drive.google.com/file/d/14PYIXEOjtdc8pdJNub8XmE1q_0d0pTrN/view?usp=share_link",
+              """${"Mundig - Travel without move".tr} :
+https://drive.google.com/file/d/14PYIXEOjtdc8pdJNub8XmE1q_0d0pTrN/view?usp=share_link""",
             );
           },
           leading: Icon(
             Icons.share_outlined,
           ),
-          title: Text("Share the app"),
+          title: Text("Share the app".tr),
         ),
       ],
     );
