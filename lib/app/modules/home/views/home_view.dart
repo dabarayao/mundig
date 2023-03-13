@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:translator/translator.dart';
-
 import '../controllers/home_controller.dart';
 import './settings.dart';
 import './country_list.dart';
 import './category_list.dart';
 import './country_fav_list.dart';
 
-final translator = GoogleTranslator();
 
 final HomeController contHome = Get.put(HomeController());
 

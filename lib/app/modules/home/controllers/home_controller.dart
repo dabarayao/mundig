@@ -13,7 +13,12 @@ class HomeController extends GetxController {
   var checkInternet = false.obs;
   var favArray = [...box.read('favsCountries')].obs;
 
-  var darkMode = box.read("theme") ? true.obs : false.obs;
+  var darkMode = box.read("theme") != null
+      ? box.read("theme")
+          ? true.obs
+          : false.obs
+      : false.obs;
+
   var langui = box.read("langui") == null
       ? "en".obs
       : box.read("langui") == "fr"
@@ -52,7 +57,14 @@ class HomeController extends GetxController {
   }
 
   String utf(str) {
-    return utf8.decode(str.runes.toList());
+    var rt = str;
+    try {
+      rt = utf8.decode(str.runes.toList());
+    } catch (e) {
+      rt = str;
+    }
+
+    return rt;
   }
 
   // int get selectedIndex {

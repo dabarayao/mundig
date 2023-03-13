@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mundig/app/modules/home/views/country_list.dart';
 import '../controllers/home_controller.dart';
 import 'package:mundig/app/data/home_view_data.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,9 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
-import 'package:animated_widgets/animated_widgets.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:stroke_text/stroke_text.dart';
 
 final HomeController contHome = Get.put(HomeController());
 final box = GetStorage();
@@ -75,7 +73,7 @@ class CategoryListView extends GetView<HomeController> {
                   footer: GridTileBar(
                     backgroundColor: contHome.darkMode.value
                         ? Colors.black.withOpacity(0.2)
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withOpacity(0.7),
                     title: Row(
                       children: [
                         const Icon(
@@ -83,14 +81,15 @@ class CategoryListView extends GetView<HomeController> {
                           color: Colors.grey,
                         ),
                         Obx(
-                          () => Expanded(
-                            child: Skeleton(
-                              themeMode: contHome.darkMode.value
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                              isLoading: nbAmericas.value == 0 ? true : false,
-                              skeleton: const SkeletonLine(
-                                  style: SkeletonLineStyle()),
+                          () => Skeleton(
+                            themeMode: contHome.darkMode.value
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                            isLoading: nbAmericas.value == 0 ? true : false,
+                            skeleton: const SkeletonLine(
+                                style: SkeletonLineStyle(width: 30)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5),
                               child: Text('${nbAmericasLove.value}',
                                   style: TextStyle(
                                       color: contHome.darkMode.value
@@ -104,14 +103,15 @@ class CategoryListView extends GetView<HomeController> {
                         ),
                         const FaIcon(FontAwesomeIcons.earthAfrica,
                             color: Colors.grey),
-                        Obx(() => Expanded(
-                              child: Skeleton(
-                                themeMode: contHome.darkMode.value
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                isLoading: nbAmericas.value == 0 ? true : false,
-                                skeleton: const SkeletonLine(
-                                    style: SkeletonLineStyle()),
+                        Obx(() => Skeleton(
+                              themeMode: contHome.darkMode.value
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              isLoading: nbAmericas.value == 0 ? true : false,
+                              skeleton: const SkeletonLine(
+                                  style: SkeletonLineStyle(width: 30)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   "${nbAmericas.value}",
                                   style: TextStyle(
@@ -153,7 +153,7 @@ class CategoryListView extends GetView<HomeController> {
                   footer: GridTileBar(
                     backgroundColor: contHome.darkMode.value
                         ? Colors.black.withOpacity(0.2)
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withOpacity(0.7),
                     title: Row(
                       children: [
                         const Icon(
@@ -161,21 +161,20 @@ class CategoryListView extends GetView<HomeController> {
                           color: Colors.grey,
                         ),
                         Obx(
-                          () => Expanded(
-                            child: Skeleton(
-                              themeMode: contHome.darkMode.value
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                              isLoading: nbAmericas.value == 0 ? true : false,
-                              skeleton: const SkeletonLine(
-                                  style: SkeletonLineStyle()),
-                              child: Expanded(
-                                child: Text('${nbEuropaLove.value}',
-                                    style: TextStyle(
-                                        color: contHome.darkMode.value
-                                            ? Colors.white
-                                            : Colors.black)),
-                              ),
+                          () => Skeleton(
+                            themeMode: contHome.darkMode.value
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                            isLoading: nbAmericas.value == 0 ? true : false,
+                            skeleton: const SkeletonLine(
+                                style: SkeletonLineStyle(width: 30)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('${nbEuropaLove.value}',
+                                  style: TextStyle(
+                                      color: contHome.darkMode.value
+                                          ? Colors.white
+                                          : Colors.black)),
                             ),
                           ),
                         ),
@@ -184,14 +183,15 @@ class CategoryListView extends GetView<HomeController> {
                         ),
                         const FaIcon(FontAwesomeIcons.earthAfrica,
                             color: Colors.grey),
-                        Obx(() => Expanded(
-                              child: Skeleton(
-                                themeMode: contHome.darkMode.value
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                isLoading: nbEurope.value == 0 ? true : false,
-                                skeleton: const SkeletonLine(
-                                    style: SkeletonLineStyle()),
+                        Obx(() => Skeleton(
+                              themeMode: contHome.darkMode.value
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              isLoading: nbEurope.value == 0 ? true : false,
+                              skeleton: const SkeletonLine(
+                                  style: SkeletonLineStyle(width: 30)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   "${nbEurope.value}",
                                   style: TextStyle(
@@ -233,7 +233,7 @@ class CategoryListView extends GetView<HomeController> {
                   footer: GridTileBar(
                     backgroundColor: contHome.darkMode.value
                         ? Colors.black.withOpacity(0.2)
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withOpacity(0.7),
                     title: Row(
                       children: [
                         const Icon(
@@ -241,21 +241,20 @@ class CategoryListView extends GetView<HomeController> {
                           color: Colors.grey,
                         ),
                         Obx(
-                          () => Expanded(
-                            child: Skeleton(
-                              themeMode: contHome.darkMode.value
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                              isLoading: nbAmericas.value == 0 ? true : false,
-                              skeleton: const SkeletonLine(
-                                  style: SkeletonLineStyle()),
-                              child: Expanded(
-                                child: Text('${nbAfricaLove.value}',
-                                    style: TextStyle(
-                                        color: contHome.darkMode.value
-                                            ? Colors.white
-                                            : Colors.black)),
-                              ),
+                          () => Skeleton(
+                            themeMode: contHome.darkMode.value
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                            isLoading: nbAmericas.value == 0 ? true : false,
+                            skeleton: const SkeletonLine(
+                                style: SkeletonLineStyle(width: 30)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('${nbAfricaLove.value}',
+                                  style: TextStyle(
+                                      color: contHome.darkMode.value
+                                          ? Colors.white
+                                          : Colors.black)),
                             ),
                           ),
                         ),
@@ -264,14 +263,15 @@ class CategoryListView extends GetView<HomeController> {
                         ),
                         const FaIcon(FontAwesomeIcons.earthAfrica,
                             color: Colors.grey),
-                        Obx(() => Expanded(
-                              child: Skeleton(
-                                themeMode: contHome.darkMode.value
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                isLoading: nbAfrica.value == 0 ? true : false,
-                                skeleton: const SkeletonLine(
-                                    style: SkeletonLineStyle()),
+                        Obx(() => Skeleton(
+                              themeMode: contHome.darkMode.value
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              isLoading: nbAfrica.value == 0 ? true : false,
+                              skeleton: const SkeletonLine(
+                                  style: SkeletonLineStyle(width: 30)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   "${nbAfrica.value}",
                                   style: TextStyle(
@@ -313,7 +313,7 @@ class CategoryListView extends GetView<HomeController> {
                   footer: GridTileBar(
                     backgroundColor: contHome.darkMode.value
                         ? Colors.black.withOpacity(0.2)
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withOpacity(0.7),
                     title: Row(
                       children: [
                         const Icon(
@@ -321,21 +321,20 @@ class CategoryListView extends GetView<HomeController> {
                           color: Colors.grey,
                         ),
                         Obx(
-                          () => Expanded(
-                            child: Skeleton(
-                              themeMode: contHome.darkMode.value
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                              isLoading: nbAmericas.value == 0 ? true : false,
-                              skeleton: const SkeletonLine(
-                                  style: SkeletonLineStyle()),
-                              child: Expanded(
-                                child: Text('${nbAsiaLove.value}',
-                                    style: TextStyle(
-                                        color: contHome.darkMode.value
-                                            ? Colors.white
-                                            : Colors.black)),
-                              ),
+                          () => Skeleton(
+                            themeMode: contHome.darkMode.value
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                            isLoading: nbAmericas.value == 0 ? true : false,
+                            skeleton: const SkeletonLine(
+                                style: SkeletonLineStyle(width: 30)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('${nbAsiaLove.value}',
+                                  style: TextStyle(
+                                      color: contHome.darkMode.value
+                                          ? Colors.white
+                                          : Colors.black)),
                             ),
                           ),
                         ),
@@ -344,14 +343,15 @@ class CategoryListView extends GetView<HomeController> {
                         ),
                         const FaIcon(FontAwesomeIcons.earthAfrica,
                             color: Colors.grey),
-                        Obx(() => Expanded(
-                              child: Skeleton(
-                                themeMode: contHome.darkMode.value
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                isLoading: nbAsia.value == 0 ? true : false,
-                                skeleton: const SkeletonLine(
-                                    style: SkeletonLineStyle()),
+                        Obx(() => Skeleton(
+                              themeMode: contHome.darkMode.value
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              isLoading: nbAsia.value == 0 ? true : false,
+                              skeleton: const SkeletonLine(
+                                  style: SkeletonLineStyle(width: 30)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   "${nbAsia.value}",
                                   style: TextStyle(
@@ -392,7 +392,7 @@ class CategoryListView extends GetView<HomeController> {
                   footer: GridTileBar(
                     backgroundColor: contHome.darkMode.value
                         ? Colors.black.withOpacity(0.2)
-                        : Colors.white.withOpacity(0.5),
+                        : Colors.white.withOpacity(0.7),
                     title: Row(
                       children: [
                         const Icon(
@@ -400,21 +400,20 @@ class CategoryListView extends GetView<HomeController> {
                           color: Colors.grey,
                         ),
                         Obx(
-                          () => Expanded(
-                            child: Skeleton(
-                              themeMode: contHome.darkMode.value
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                              isLoading: nbAmericas.value == 0 ? true : false,
-                              skeleton: const SkeletonLine(
-                                  style: SkeletonLineStyle()),
-                              child: Expanded(
-                                child: Text('${nbOceaniaLove.value}',
-                                    style: TextStyle(
-                                        color: contHome.darkMode.value
-                                            ? Colors.white
-                                            : Colors.black)),
-                              ),
+                          () => Skeleton(
+                            themeMode: contHome.darkMode.value
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                            isLoading: nbAmericas.value == 0 ? true : false,
+                            skeleton: const SkeletonLine(
+                                style: SkeletonLineStyle(width: 30)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('${nbOceaniaLove.value}',
+                                  style: TextStyle(
+                                      color: contHome.darkMode.value
+                                          ? Colors.white
+                                          : Colors.black)),
                             ),
                           ),
                         ),
@@ -423,14 +422,15 @@ class CategoryListView extends GetView<HomeController> {
                         ),
                         const FaIcon(FontAwesomeIcons.earthAfrica,
                             color: Colors.grey),
-                        Obx(() => Expanded(
-                              child: Skeleton(
-                                themeMode: contHome.darkMode.value
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                isLoading: nbOceania.value == 0 ? true : false,
-                                skeleton: const SkeletonLine(
-                                    style: SkeletonLineStyle()),
+                        Obx(() => Skeleton(
+                              themeMode: contHome.darkMode.value
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              isLoading: nbOceania.value == 0 ? true : false,
+                              skeleton: const SkeletonLine(
+                                  style: SkeletonLineStyle(width: 30)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   "${nbOceania.value}",
                                   style: TextStyle(
@@ -480,21 +480,20 @@ class CategoryListView extends GetView<HomeController> {
                           color: Colors.grey,
                         ),
                         Obx(
-                          () => Expanded(
-                            child: Skeleton(
-                              themeMode: contHome.darkMode.value
-                                  ? ThemeMode.dark
-                                  : ThemeMode.light,
-                              isLoading: nbAmericas.value == 0 ? true : false,
-                              skeleton: const SkeletonLine(
-                                  style: SkeletonLineStyle()),
-                              child: Expanded(
-                                child: Text('${nbAntarcticLove.value}',
-                                    style: TextStyle(
-                                        color: contHome.darkMode.value
-                                            ? Colors.white
-                                            : Colors.black)),
-                              ),
+                          () => Skeleton(
+                            themeMode: contHome.darkMode.value
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                            isLoading: nbAmericas.value == 0 ? true : false,
+                            skeleton: const SkeletonLine(
+                                style: SkeletonLineStyle(width: 30)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('${nbAntarcticLove.value}',
+                                  style: TextStyle(
+                                      color: contHome.darkMode.value
+                                          ? Colors.white
+                                          : Colors.black)),
                             ),
                           ),
                         ),
@@ -503,15 +502,15 @@ class CategoryListView extends GetView<HomeController> {
                         ),
                         const FaIcon(FontAwesomeIcons.earthAfrica,
                             color: Colors.grey),
-                        Obx(() => Expanded(
-                              child: Skeleton(
-                                themeMode: contHome.darkMode.value
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                isLoading:
-                                    nbAntarctic.value == 0 ? true : false,
-                                skeleton: const SkeletonLine(
-                                    style: SkeletonLineStyle()),
+                        Obx(() => Skeleton(
+                              themeMode: contHome.darkMode.value
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              isLoading: nbAntarctic.value == 0 ? true : false,
+                              skeleton: const SkeletonLine(
+                                  style: SkeletonLineStyle(width: 30)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   "${nbAntarctic.value}",
                                   style: TextStyle(
@@ -544,24 +543,18 @@ class CategoryListView extends GetView<HomeController> {
                       children: <Widget>[
                         isOnline
                             ? SizedBox()
-                            : TranslationAnimatedWidget(
-                                enabled:
-                                    true, //update this boolean to forward/reverse the animation
-                                values: const [
-                                  Offset(0, 200), // disabled value value
-                                  Offset(0, 250), //intermediate value
-                                  Offset(0, 0) //enabled value
-                                ],
+                            : DelayedDisplay(
+                                delay: Duration(seconds: 1),
                                 child: Container(
                                   color: Colors.red,
                                   width: double.infinity,
                                   child: const Text(
-                                    "Vérifier votre connexion internet",
+                                    "Check your internet connection",
                                     style: TextStyle(color: Colors.white),
                                     textAlign: TextAlign.center,
                                   ),
-                                ) /* your widget */
-                                )
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -624,8 +617,7 @@ class CountryCategoryView extends GetView<HomeController> {
                   if (snapshot.hasError) {
                     return Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Expanded(
-                          child: Image.asset("pictures/no_internet.png")),
+                      child: Image.asset("pictures/no_internet.png"),
                     );
                   } else if (snapshot.hasData) {
                     if (snapshot.data!.isEmpty) {
@@ -675,24 +667,19 @@ class CountryCategoryView extends GetView<HomeController> {
                         children: <Widget>[
                           isOnline
                               ? SizedBox()
-                              : TranslationAnimatedWidget(
-                                  enabled:
-                                      true, //update this boolean to forward/reverse the animation
-                                  values: const [
-                                    Offset(0, 200), // disabled value value
-                                    Offset(0, 250), //intermediate value
-                                    Offset(0, 0) //enabled value
-                                  ],
+                              : DelayedDisplay(
+                                  delay: Duration(seconds: 1),
                                   child: Container(
                                     color: Colors.red,
                                     width: double.infinity,
-                                    child: const Text(
-                                      "Vérifier votre connexion internet",
-                                      style: TextStyle(color: Colors.white),
+                                    child: Text(
+                                      "Check your internet connection".tr,
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       textAlign: TextAlign.center,
                                     ),
-                                  ) /* your widget */
-                                  )
+                                  ),
+                                )
                         ],
                       ),
                     ),
@@ -716,15 +703,30 @@ class CountriesCategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    countries.sort((a, b) => a.name.compareTo(b.name));
+    countries.sort((a, b) => (contHome.utf(contHome.langui.value == "en"
+            ? a.name
+            : contHome.langui.value == "fr"
+                ? a.nameFra
+                : a.nameSpa))
+        .compareTo(contHome.utf(contHome.langui.value == "en"
+            ? b.name
+            : contHome.langui.value == "fr"
+                ? b.nameFra
+                : b.nameSpa)));
 
     countries.retainWhere((country) =>
-        country.name.toLowerCase().trim().contains(
-            contHome.globalSearchCategory.value.toLowerCase().trim()) ||
+        (contHome.utf(contHome.langui.value == "en"
+                ? country.name
+                : contHome.langui.value == "fr"
+                    ? country.nameFra
+                    : country.nameSpa))
+            .toLowerCase()
+            .trim()
+            .contains(
+                contHome.globalSearchCategory.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}"
-                .contains(
-                    contHome.globalSearchCategory.value.toLowerCase().trim()));
+            contHome.globalSearch.value.toLowerCase() ==
+                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
 
     countries.retainWhere((country) => country.continent
         .toLowerCase()
@@ -738,7 +740,11 @@ class CountriesCategoryList extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                   onTap: () => Get.toNamed("/country", arguments: {
-                        'countryName': countries[index].name,
+                        'countryName': contHome.langui.value == "en"
+                            ? countries[index].name
+                            : contHome.langui.value == "fr"
+                                ? countries[index].nameFra
+                                : countries[index].nameSpa,
                         'flag': countries[index].flags,
                         'capital': countries[index].capital,
                         'continent': countries[index].continent,
@@ -762,7 +768,11 @@ class CountriesCategoryList extends StatelessWidget {
                           Image.asset("pictures/default_country.png"),
                       width: 60,
                       height: 60),
-                  title: Text(contHome.utf(countries[index].name)),
+                  title: Text(contHome.utf(contHome.langui.value == "en"
+                      ? countries[index].name
+                      : contHome.langui.value == "fr"
+                          ? countries[index].nameFra
+                          : countries[index].nameSpa)),
                   trailing: Obx(
                     () => IconButton(
                         onPressed: () {
@@ -792,8 +802,7 @@ class CountriesCategoryList extends StatelessWidget {
                   ));
             },
           )
-        : Center(
-            child: Expanded(child: Image.asset("pictures/no_result_en.png")));
+        : Center(child: Image.asset("pictures/no_result_en.png"));
 
     //  countries[index]
     //         .name

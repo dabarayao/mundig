@@ -5,6 +5,9 @@ class Languages extends Translations {
   Map<String, Map<String, String>> get keys => {
         'fr_FR': {
           'Search': 'Recherche',
+          'Check your internet connection': 'Vérifiez votre connexion internet',
+          'residents': 'habitants',
+          "Hidden feature": 'Fonctionnalité cachée',
 
           // French translation for about page
           'About': 'A propos',
@@ -14,7 +17,12 @@ It displays all country in the world and make it possible to have the main infor
               """Mundig est un logiciel créé par le développeur Yao Dabara Mickael.
 Il affiche tous les pays du monde et permet d'avoir les principales informations sur chaque pays comme la carte, l'indicatif téléphonique, la capitale...""",
 
+          // French translation for setting page
           'Languages': 'Langues',
+          'Choose a language': 'Choisissez une langue',
+          'French': 'Français',
+          'English': 'Anglais',
+          'Spanish': 'Espagnol',
           'Dark theme': 'Thème sombre',
           'Share the app': 'Partager l\'application',
           'Mundig - Travel without move': 'Mundig - Voyager sans bouger',
@@ -56,8 +64,11 @@ Il affiche tous les pays du monde et permet d'avoir les principales informations
         },
         'es_US': {
           'Search': 'Buscar',
+          'Check your internet connection': 'Compruebe su conexión a Internet',
+          'residents': 'residentes',
+          "Hidden feature": 'Función escondida',
 
-          // French translation for about page
+          // Spanish translation for about page
           'About': 'Información',
           'Developer information': 'Información sobre el desarrollador',
           """Mundig is a software created by the developer Yao Dabara Mickael. 
@@ -65,12 +76,17 @@ It displays all country in the world and make it possible to have the main infor
               """Mundig es un software creado por el desarrollador Yao Dabara Mickael.
 Muestra todos los países del mundo y hace posible tener la información principal sobre cada país como el mapa, el código de marcación, la capital...""",
 
+          // Spanish translation for setting page
           'Languages': 'Idiomas',
+          'Choose a language': 'Elija un idioma',
+          'French': 'Francés',
+          'English': 'Inglés',
+          'Spanish': 'Español',
           'Dark theme': 'Tema oscuro',
           'Share the app': 'Compartir la aplicación',
           'Mundig - Travel without move': 'Mundig - Viajar sin moverse',
 
-          // French translation for categories view page
+          // Spanish translation for categories view page
           'Americas': 'Américas',
           'Europe': 'Europa',
           'Africa': 'África',
@@ -85,7 +101,7 @@ Muestra todos los países del mundo y hace posible tener la información princip
           'Countries of Oceania': 'Países de Oceanía',
           'Countries of Antarctic': 'Países de la Antártida',
 
-          // French translation for country view page
+          // Spanish translation for country view page
           'Name': 'Nombre',
           'Capital': 'Capital',
           'Continent': 'Continente',
@@ -107,8 +123,11 @@ Muestra todos los países del mundo y hace posible tener la información princip
         },
         'en_US': {
           'Search': 'Search',
+          'Check your internet connection': 'Check your internet connection',
+          'residents': 'residents',
+          "Hidden feature": 'Hidden feature',
 
-          // French translation for about page
+          // English translation for about page
           'About': 'About',
           'Developer information': 'Developer information',
           """Mundig is a software created by the developer Yao Dabara Mickael. 
@@ -116,12 +135,17 @@ It displays all country in the world and make it possible to have the main infor
               """Mundig is a software created by the developer Yao Dabara Mickael. 
 It displays all country in the world and make it possible to have the main informations about each countries such as the map, the dialing code, the captial...""",
 
+          // English translation for setting page
           'Languages': 'Languages',
+          'Choose a language': 'Choose a language',
+          'French': 'French',
+          'English': 'English',
+          'Spanish': 'Spanish',
           'Dark theme': 'Dark theme',
           'Share the app': 'Share the app',
           'Mundig - Travel without move': 'Mundig - Travel without move',
 
-          // French translation for categories view page
+          // English translation for categories view page
           'Americas': 'Americas',
           'Europe': 'Europa',
           'Africa': 'Africa',
@@ -136,7 +160,7 @@ It displays all country in the world and make it possible to have the main infor
           'Countries of Oceania': 'Countries of Oceania',
           'Countries of Antarctic': 'Countries of Antarctic',
 
-          // French translation for country view page
+          // English translation for country view page
           'Name': 'Name',
           'Capital': 'Capital',
           'Continent': 'Continent',

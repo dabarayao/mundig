@@ -10,6 +10,14 @@ class AboutView extends GetView<AboutController> {
   const AboutView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var hid_img = box.read("langui") == null
+        ? "pictures/english_hidden_black.png".obs
+        : box.read("langui") == "fr"
+            ? "pictures/french_hidden_black.png".obs
+            : box.read("langui") == "es"
+                ? "pictures/spanish_hidden_black.png".obs
+                : "pictures/english_hidden_black.png".obs;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('About'.tr),
@@ -22,15 +30,24 @@ class AboutView extends GetView<AboutController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(child: Image.asset("pictures/logo_mundig.png", width: 250)),
-            SizedBox(width: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 """Mundig is a software created by the developer Yao Dabara Mickael. 
-It displays all country in the world and make it possible to have the main informations about each countries such as the map, the dialing code, the captial...""".tr
+It displays all country in the world and make it possible to have the main informations about each countries such as the map, the dialing code, the captial..."""
+                    .tr
                     .tr,
               ),
             ),
+            Text("Hidden feature".tr,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5),
+              child: Obx(() => Image.asset(hid_img.value)),
+            ),
+            const SizedBox(height: 20),
             Text("Developer information".tr,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
@@ -38,8 +55,7 @@ It displays all country in the world and make it possible to have the main infor
             ListTile(
               onTap: () {
                 // add the [https]
-                // launchUrl(Uri.parse("tel:+2250779549937")); // new line
-                Get.updateLocale(const Locale('fr', 'FR'));
+                launchUrl(Uri.parse("tel:+2250779549937")); // new line
               },
               leading: const Icon(
                 Icons.info,

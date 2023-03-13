@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,31 +10,55 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:translator/translator.dart';
 
 final CountryController contCountry = Get.put(CountryController());
 late WebViewXController webviewController;
 
+final translator = GoogleTranslator();
+
 class CountryView extends GetView<CountryController> {
   CountryView({Key? key}) : super(key: key);
+  var langui = box.read("langui") == null
+      ? "en".obs
+      : box.read("langui") == "fr"
+          ? "fr".obs
+          : box.read("langui") == "es"
+              ? "es".obs
+              : "en".obs;
 
   var args = Get.arguments;
-  var listener =
-      InternetConnectionCheckerPlus().onStatusChange.listen((status) {
-    switch (status) {
-      case InternetConnectionStatus.connected:
-        contCountry.checkInternet.value = true;
-        webviewController.reload();
-        print('Data connection is available.');
-        break;
-      case InternetConnectionStatus.disconnected:
-        contCountry.checkInternet.value = false;
-        print('You are disconnected from the internet.');
-        break;
-    }
-  });
 
   @override
   Widget build(BuildContext context) {
+    var argCapital = "".obs;
+    var argContinent = "".obs;
+
+    var listener =
+        InternetConnectionCheckerPlus().onStatusChange.listen((status) async {
+      switch (status) {
+        case InternetConnectionStatus.connected:
+          contCountry.checkInternet.value = true;
+
+          webviewController.reload();
+          break;
+        case InternetConnectionStatus.disconnected:
+          contCountry.checkInternet.value = false;
+          print('You are disconnected from the internet.');
+          break;
+      }
+    });
+
+    args['capital'] != null
+        ? Timer.periodic(
+            const Duration(seconds: 2),
+            (Timer t) => translator
+                    .translate(args['capital'][0], from: "en", to: langui.value)
+                    .then((s) {
+                  argCapital.value = "$s";
+                }))
+        : "";
+
     return Scaffold(
       appBar: AppBar(
         title: Text(contCountry.utf(args['countryName'])),
@@ -68,7 +93,7 @@ class CountryView extends GetView<CountryController> {
                                               isLoading: true,
                                               skeleton: SkeletonAvatar(
                                                   style: SkeletonAvatarStyle(
-                                                      width: 60)),
+                                                      height: 200, width: 300)),
                                               child: Text("Loading...")),
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.person_outline,
@@ -97,8 +122,26 @@ class CountryView extends GetView<CountryController> {
                           child: Card(
                             child: ListTile(
                                 onTap: () {},
-                                title:
-                                    Text(contCountry.utf(args['capital'][0])),
+                                title: Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Obx(
+                                      () => Skeleton(
+                                        isLoading: argCapital.value != "" ||
+                                                langui.value == "en"
+                                            ? false
+                                            : true,
+                                        skeleton: const SkeletonLine(
+                                            style: SkeletonLineStyle()),
+                                        child: Text(
+                                            contCountry.utf(langui.value == "en"
+                                                ? args['capital'][0]
+                                                : argCapital.value),
+                                            style: TextStyle(fontSize: 20)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 subtitle: Text("Capital".tr)),
                           ),
                         )
@@ -108,7 +151,7 @@ class CountryView extends GetView<CountryController> {
                     child: Card(
                       child: ListTile(
                         onTap: () {},
-                        title: Text(contCountry.utf(args['continent']),
+                        title: Text(contCountry.utf(args['continent']).tr,
                             style: TextStyle(fontSize: 20)),
                         subtitle: Text("Continent".tr),
                       ),
@@ -126,13 +169,43 @@ class CountryView extends GetView<CountryController> {
                                 Column(
                                   children: args['currency']
                                       .entries
-                                      .map<Widget>((value) => ListTile(
-                                            onTap: () {},
-                                            title: Text(
-                                                "${contCountry.utf(value.value['name'])} (${contCountry.utf(value.value['symbol'])})",
-                                                style: TextStyle(fontSize: 20)),
-                                          ))
-                                      .toList(),
+                                      .map<Widget>((value) {
+                                    var argCurrency = "".obs;
+
+                                    Timer.periodic(
+                                        const Duration(seconds: 2),
+                                        (Timer t) => translator
+                                                .translate(value.value['name'],
+                                                    from: 'en',
+                                                    to: langui.value)
+                                                .then((s) {
+                                              argCurrency.value = "$s";
+                                            }));
+
+                                    return ListTile(
+                                      onTap: () {},
+                                      title: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Obx(
+                                          () => Expanded(
+                                            child: Skeleton(
+                                              isLoading:
+                                                  argCurrency.value != "" ||
+                                                          langui.value == "en"
+                                                      ? false
+                                                      : true,
+                                              skeleton: const SkeletonLine(
+                                                  style: SkeletonLineStyle()),
+                                              child: Text(
+                                                  "${contCountry.utf(langui.value == "en" ? value.value['name'] : argCurrency.value)} (${contCountry.utf(value.value['symbol'])})",
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
                               ],
                             ),
@@ -156,7 +229,7 @@ class CountryView extends GetView<CountryController> {
                     child: Card(
                       child: ListTile(
                         onTap: () {},
-                        title: Text("${args['population']} residents",
+                        title: Text("${args['population']} ${'residents'.tr}",
                             style: TextStyle(fontSize: 20)),
                         subtitle: Text("Population".tr),
                       ),
@@ -174,15 +247,59 @@ class CountryView extends GetView<CountryController> {
                                 Column(
                                   children: args['languages']
                                       .entries
-                                      .map<Widget>((value) => ListTile(
-                                            onTap: () {},
-                                            title: Text(
-                                                "${contCountry.utf(value.value)} (${contCountry.utf(value.key)})",
-                                                style: TextStyle(fontSize: 20)),
-                                          ))
-                                      .toList(),
+                                      .map<Widget>((value) {
+                                    var argLanguage = "".obs;
+
+                                    Timer.periodic(
+                                        const Duration(seconds: 2),
+                                        (Timer t) => translator
+                                                .translate(value.value,
+                                                    from: 'en',
+                                                    to: langui.value)
+                                                .then((s) {
+                                              argLanguage.value = "$s";
+                                            }));
+
+                                    return ListTile(
+                                      onTap: () {},
+                                      title: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Obx(
+                                          () => Expanded(
+                                            child: Skeleton(
+                                              isLoading:
+                                                  argLanguage.value != "" ||
+                                                          langui.value == "en"
+                                                      ? false
+                                                      : true,
+                                              skeleton: const SkeletonLine(
+                                                  style: SkeletonLineStyle()),
+                                              child: Text(
+                                                  "${contCountry.utf(langui.value == "en" ? value.value : argLanguage.value)} (${contCountry.utf(value.key)})",
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
                               ],
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                  args['dialingCode']["root"] != null
+                      ? Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Card(
+                            child: ListTile(
+                              onTap: () {},
+                              title: Text(
+                                  "${args['dialingCode']['root']}${args['dialingCode']['suffixes'][0]}",
+                                  style: TextStyle(fontSize: 20)),
+                              subtitle: Text("Dialing code".tr),
                             ),
                           ),
                         )
@@ -214,20 +331,6 @@ class CountryView extends GetView<CountryController> {
                           ],
                         )
                       : SizedBox(),
-                  args['dialingCode']["root"] != null
-                      ? Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Card(
-                            child: ListTile(
-                              onTap: () {},
-                              title: Text(
-                                  "${args['dialingCode']['root']}${args['dialingCode']['suffixes'][0]}",
-                                  style: TextStyle(fontSize: 20)),
-                              subtitle: Text("Dialing code".tr),
-                            ),
-                          ),
-                        )
-                      : SizedBox(),
                 ]),
             Obx(() => contCountry.checkInternet.value == true
                 ? WebViewX(
@@ -239,7 +342,6 @@ class CountryView extends GetView<CountryController> {
                     width: MediaQuery.of(context).size.width,
                     onPageFinished: (finish) {
                       //reading response on finish
-                      print("finish is ${finish}");
                     },
                   )
                 : Card(
@@ -247,7 +349,7 @@ class CountryView extends GetView<CountryController> {
                     child: ListTile(
                       textColor: Colors.white,
                       onTap: () {},
-                      title: const Text("Vérifier votre connexion internet",
+                      title: const Text("Check your internet connection",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 20)),
                       subtitle:

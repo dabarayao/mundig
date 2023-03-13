@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
-import 'package:animated_widgets/animated_widgets.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -81,8 +80,7 @@ class CountryFavListView extends GetView<HomeController> {
                 if (snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Expanded(
-                        child: Image.asset("pictures/no_internet.png")),
+                    child: Image.asset("pictures/no_internet.png"),
                   );
                 } else if (snapshot.hasData) {
                   if (snapshot.data!.isEmpty) {
@@ -135,24 +133,19 @@ class CountryFavListView extends GetView<HomeController> {
                         children: <Widget>[
                           isOnline
                               ? SizedBox()
-                              : TranslationAnimatedWidget(
-                                  enabled:
-                                      true, //update this boolean to forward/reverse the animation
-                                  values: const [
-                                    Offset(0, 200), // disabled value value
-                                    Offset(0, 250), //intermediate value
-                                    Offset(0, 0) //enabled value
-                                  ],
+                              : DelayedDisplay(
+                                  delay: Duration(seconds: 1),
                                   child: Container(
                                     color: Colors.red,
                                     width: double.infinity,
-                                    child: const Text(
-                                      "Vérifier votre connexion internet",
-                                      style: TextStyle(color: Colors.white),
+                                    child: Text(
+                                      "Check your internet connection".tr,
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       textAlign: TextAlign.center,
                                     ),
-                                  ) /* your widget */
-                                  )
+                                  ),
+                                )
                         ],
                       ),
                     ),
@@ -170,15 +163,29 @@ class CountriesFavList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    countries.sort((a, b) => a.name.compareTo(b.name));
+    countries.sort((a, b) => (contHome.utf(contHome.langui.value == "en"
+            ? a.name
+            : contHome.langui.value == "fr"
+                ? a.nameFra
+                : a.nameSpa))
+        .compareTo(contHome.utf(contHome.langui.value == "en"
+            ? b.name
+            : contHome.langui.value == "fr"
+                ? b.nameFra
+                : b.nameSpa)));
+
     countries.retainWhere((country) =>
-        country.name
+        (contHome.utf(contHome.langui.value == "en"
+                ? country.name
+                : contHome.langui.value == "fr"
+                    ? country.nameFra
+                    : country.nameSpa))
             .toLowerCase()
             .trim()
             .contains(contHome.globalSearchFav.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}"
-                .contains(contHome.globalSearchFav.value.toLowerCase().trim()));
+            contHome.globalSearch.value.toLowerCase() ==
+                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
 
     countries.retainWhere(
         (country) => box.read('favsCountries').contains(country.name));
@@ -190,7 +197,11 @@ class CountriesFavList extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                   onTap: () => Get.toNamed("/country", arguments: {
-                        'countryName': countries[index].name,
+                        'countryName': contHome.langui.value == "en"
+                            ? countries[index].name
+                            : contHome.langui.value == "fr"
+                                ? countries[index].nameFra
+                                : countries[index].nameSpa,
                         'flag': countries[index].flags,
                         'capital': countries[index].capital,
                         'continent': countries[index].continent,
@@ -214,7 +225,11 @@ class CountriesFavList extends StatelessWidget {
                           Image.asset("pictures/default_country.png"),
                       width: 60,
                       height: 60),
-                  title: Text(contHome.utf(countries[index].name)),
+                  title: Text(contHome.utf(contHome.langui.value == "en"
+                      ? countries[index].name
+                      : contHome.langui.value == "fr"
+                          ? countries[index].nameFra
+                          : countries[index].nameSpa)),
                   trailing: IconButton(
                       onPressed: () {
                         var favs = box.read('favsCountries');
@@ -230,7 +245,7 @@ class CountriesFavList extends StatelessWidget {
                       icon: Icon(Icons.favorite, color: Color(0xFFF2B538))));
             },
           )
-        : Center(child: Expanded(child: Image.asset("pictures/empty_en.png")));
+        : Center(child: Image.asset("pictures/empty_en.png"));
 
     //  countries[index]
     //         .name

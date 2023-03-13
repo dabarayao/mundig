@@ -6,11 +6,16 @@ import 'package:get/get.dart';
 import 'package:translator/translator.dart';
 
 import '../controllers/home_controller.dart';
+import 'package:mundig/app/data/home_view_data.dart';
+import 'package:get_storage/get_storage.dart';
+
 import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
 
 final translator = GoogleTranslator();
 
 final HomeController contHome = Get.put(HomeController());
+final box = GetStorage();
 
 class SettingsView extends GetView<HomeController> {
   SettingsView({Key? key}) : super(key: key);
@@ -27,13 +32,27 @@ class SettingsView extends GetView<HomeController> {
                     StatefulBuilder(builder: (context, StateSetter setState) {
                       return SimpleDialog(
                         title: Text(
-                          "Choose a language",
+                          "Choose a language".tr,
                         ),
                         children: [
                           RadioListTile(
                             activeColor: Color(0xFFF2B538),
+                            title: Text("English".tr),
+                            value: "en",
+                            groupValue: contHome.langui.value,
+                            onChanged: (value) {
+                              box.write("langui", "en");
+                              contHome.langui.value = "en";
+                              Get.updateLocale(const Locale('en', 'US'));
+                              contHome.countryList.value =
+                                  fetchCountries(http.Client());
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RadioListTile(
+                            activeColor: Color(0xFFF2B538),
                             title: Text(
-                              "French",
+                              "French".tr,
                             ),
                             value: "fr",
                             groupValue: contHome.langui.value,
@@ -41,30 +60,22 @@ class SettingsView extends GetView<HomeController> {
                               box.write("langui", "fr");
                               contHome.langui.value = "fr";
                               Get.updateLocale(const Locale('fr', 'FR'));
+                              contHome.countryList.value =
+                                  fetchCountries(http.Client());
                               Navigator.pop(context);
                             },
                           ),
                           RadioListTile(
                             activeColor: Color(0xFFF2B538),
-                            title: Text("English"),
-                            value: "en",
-                            groupValue: contHome.langui.value,
-                            onChanged: (value) {
-                              box.write("langui", "en");
-                              contHome.langui.value = "en";
-                              Get.updateLocale(const Locale('en', 'US'));
-                              Navigator.pop(context);
-                            },
-                          ),
-                          RadioListTile(
-                            activeColor: Color(0xFFF2B538),
-                            title: Text("Spanish"),
+                            title: Text("Spanish".tr),
                             value: "es",
                             groupValue: contHome.langui.value,
                             onChanged: (value) {
                               box.write("langui", "es");
                               contHome.langui.value = "es";
                               Get.updateLocale(const Locale('es', 'US'));
+                              contHome.countryList.value =
+                                  fetchCountries(http.Client());
                               Navigator.pop(context);
                             },
                           )

@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'app/routes/app_pages.dart';
 import 'languages.dart';
 
-
 void main() async {
   await GetStorage.init();
 
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
-    var darkMode = box.read("theme");
+    var darkMode = box.read("theme") == null ? false : box.read("theme");
     var langui = box.read("langui") == null
         ? const Locale('en', 'US')
         : box.read("langui") == "fr"
