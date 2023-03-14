@@ -122,23 +122,24 @@ class CountryView extends GetView<CountryController> {
                           child: Card(
                             child: ListTile(
                                 onTap: () {},
-                                title: Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Obx(
-                                      () => Skeleton(
-                                        isLoading: argCapital.value != "" ||
-                                                langui.value == "en"
-                                            ? false
-                                            : true,
-                                        skeleton: const SkeletonLine(
-                                            style: SkeletonLineStyle()),
-                                        child: Text(
-                                            contCountry.utf(langui.value == "en"
-                                                ? args['capital'][0]
-                                                : argCapital.value),
-                                            style: TextStyle(fontSize: 20)),
-                                      ),
+                                title: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Obx(
+                                    () => Skeleton(
+                                      isLoading: argCapital.value != "" ||
+                                              langui.value == "en"
+                                          ? false
+                                          : true,
+                                      skeleton: SkeletonLine(
+                                          style: SkeletonLineStyle(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width)),
+                                      child: Text(
+                                          contCountry.utf(langui.value == "en"
+                                              ? args['capital'][0]
+                                              : argCapital.value),
+                                          style: TextStyle(fontSize: 20)),
                                     ),
                                   ),
                                 ),
@@ -187,20 +188,21 @@ class CountryView extends GetView<CountryController> {
                                       title: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Obx(
-                                          () => Expanded(
-                                            child: Skeleton(
-                                              isLoading:
-                                                  argCurrency.value != "" ||
-                                                          langui.value == "en"
-                                                      ? false
-                                                      : true,
-                                              skeleton: const SkeletonLine(
-                                                  style: SkeletonLineStyle()),
-                                              child: Text(
-                                                  "${contCountry.utf(langui.value == "en" ? value.value['name'] : argCurrency.value)} (${contCountry.utf(value.value['symbol'])})",
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                            ),
+                                          () => Skeleton(
+                                            isLoading:
+                                                argCurrency.value != "" ||
+                                                        langui.value == "en"
+                                                    ? false
+                                                    : true,
+                                            skeleton: SkeletonLine(
+                                                style: SkeletonLineStyle(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width)),
+                                            child: Text(
+                                                "${contCountry.utf(langui.value == "en" ? value.value['name'] : argCurrency.value)} (${contCountry.utf(value.value['symbol'])})",
+                                                style: TextStyle(fontSize: 20)),
                                           ),
                                         ),
                                       ),
@@ -265,20 +267,21 @@ class CountryView extends GetView<CountryController> {
                                       title: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Obx(
-                                          () => Expanded(
-                                            child: Skeleton(
-                                              isLoading:
-                                                  argLanguage.value != "" ||
-                                                          langui.value == "en"
-                                                      ? false
-                                                      : true,
-                                              skeleton: const SkeletonLine(
-                                                  style: SkeletonLineStyle()),
-                                              child: Text(
-                                                  "${contCountry.utf(langui.value == "en" ? value.value : argLanguage.value)} (${contCountry.utf(value.key)})",
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                            ),
+                                          () => Skeleton(
+                                            isLoading:
+                                                argLanguage.value != "" ||
+                                                        langui.value == "en"
+                                                    ? false
+                                                    : true,
+                                            skeleton: SkeletonLine(
+                                                style: SkeletonLineStyle(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width)),
+                                            child: Text(
+                                                "${contCountry.utf(langui.value == "en" ? value.value : argLanguage.value)} (${contCountry.utf(value.key)})",
+                                                style: TextStyle(fontSize: 20)),
                                           ),
                                         ),
                                       ),
