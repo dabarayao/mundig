@@ -755,7 +755,7 @@ class CountriesCategoryList extends StatelessWidget {
             .contains(
                 contHome.globalSearchCategory.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            contHome.globalSearch.value.toLowerCase() ==
+            contHome.globalSearchCategory.value.toLowerCase() ==
                 "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
 
     countries.retainWhere((country) => country.continent

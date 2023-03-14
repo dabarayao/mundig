@@ -182,7 +182,7 @@ class CountriesFavList extends StatelessWidget {
             .trim()
             .contains(contHome.globalSearchFav.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            contHome.globalSearch.value.toLowerCase() ==
+            contHome.globalSearchFav.value.toLowerCase() ==
                 "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
 
     countries.retainWhere(
