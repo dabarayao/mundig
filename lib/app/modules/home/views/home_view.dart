@@ -9,7 +9,6 @@ import './country_list.dart';
 import './category_list.dart';
 import './country_fav_list.dart';
 
-
 final HomeController contHome = Get.put(HomeController());
 
 class HomeView extends GetView<HomeController> {
@@ -44,19 +43,19 @@ class HomeView extends GetView<HomeController> {
       bottomNavigationBar: Obx(() => BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: const Icon(Icons.home),
                 label: 'Home'.tr,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.category),
+                icon: const Icon(Icons.category),
                 label: 'Categories'.tr,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
+                icon: const Icon(Icons.favorite),
                 label: 'Favorites'.tr,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
+                icon: const Icon(Icons.settings),
                 label: 'Settings'.tr,
               ),
             ],

@@ -26,11 +26,9 @@ class CountryListView extends GetView<HomeController> {
         case InternetConnectionStatus.connected:
           contHome.checkInternet.value = false;
           contHome.countryList.value = fetchCountries(http.Client());
-          print('Data connection is available.');
           break;
         case InternetConnectionStatus.disconnected:
           contHome.checkInternet.value = true;
-          print('You are disconnected from the internet.');
           break;
       }
     });
@@ -39,15 +37,15 @@ class CountryListView extends GetView<HomeController> {
       fit: StackFit.expand,
       children: [
         Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(15.0),
           child: TextField(
             controller:
                 TextEditingController(text: contHome.globalSearch.value),
             decoration: InputDecoration(
               filled: true,
-              fillColor: Color(0xFFDCDCDC).withOpacity(0.2),
-              suffixIcon: Icon(Icons.search, color: Colors.grey),
-              border: UnderlineInputBorder(
+              fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
+              suffixIcon: const Icon(Icons.search, color: Colors.grey),
+              border: const UnderlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   borderSide: BorderSide.none),
               hintText: 'Search'.tr,
@@ -114,7 +112,7 @@ class CountryListView extends GetView<HomeController> {
               right: 0,
               bottom: 0,
               child: Padding(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   child: ConnectivityWidget(
                     showOfflineBanner: false,
                     builder: (context, isOnline) => Center(
@@ -122,9 +120,9 @@ class CountryListView extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           isOnline
-                              ? SizedBox()
+                              ? const SizedBox()
                               : DelayedDisplay(
-                                  delay: Duration(seconds: 1),
+                                  delay: const Duration(seconds: 1),
                                   child: Container(
                                     color: Colors.red,
                                     width: double.infinity,
@@ -239,8 +237,8 @@ class CountriesList extends StatelessWidget {
                           fetchCountries(http.Client());
                     },
                     icon: contHome.favArray.contains(countries[index].name)
-                        ? Icon(Icons.favorite, color: Color(0xFFF2B538))
-                        : Icon(Icons.favorite_border))),
+                        ? const Icon(Icons.favorite, color: Color(0xFFF2B538))
+                        : const Icon(Icons.favorite_border))),
               );
             },
           )

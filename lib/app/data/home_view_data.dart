@@ -26,7 +26,6 @@ Future<List<Country>> fetchCountries(http.Client client) async {
 
   // Use the compute function to run parseCountrys in a separate isolate.
   var tray = jsonDecode(response.body).toList();
-  var nbAm = 0;
 
   countCountry(val) =>
       tray.where((row) => (row["region"].toLowerCase() == val)).length;

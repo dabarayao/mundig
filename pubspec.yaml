@@ -55,7 +55,8 @@ flutter:
     - pictures/Asie.png
     - pictures/Europa.png
     - pictures/Oceania.png
-    - pictures/spanish_hidden_black.png # picture of hidden feature in about
-    - pictures/french_hidden_black.png # picture of hidden feature in about
-    - pictures/english_hidden_black.png # picture of hidden feature in about
+    - pictures/spanish_hidden_black.png # picture of hidden feature in about (spanish version)
+    - pictures/french_hidden_black.png # picture of hidden feature in about (french version)
+    - pictures/english_hidden_black.png # picture of hidden feature in about (english version)
+    - pictures/default_arms.png # picture of default coat of arms
 

@@ -25,11 +25,9 @@ class CategoryListView extends GetView<HomeController> {
         case InternetConnectionStatus.connected:
           contHome.checkInternet.value = false;
           fetchCountries(http.Client());
-          print('Data connection is available.');
           break;
         case InternetConnectionStatus.disconnected:
           contHome.checkInternet.value = true;
-          print('You are disconnected from the internet.');
           break;
       }
     });
@@ -573,9 +571,9 @@ class CategoryListView extends GetView<HomeController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         isOnline
-                            ? SizedBox()
+                            ? const SizedBox()
                             : DelayedDisplay(
-                                delay: Duration(seconds: 1),
+                                delay: const Duration(seconds: 1),
                                 child: Container(
                                   color: Colors.red,
                                   width: double.infinity,
@@ -622,9 +620,9 @@ class CountryCategoryView extends GetView<HomeController> {
             child: TextField(
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Color(0xFFDCDCDC).withOpacity(0.2),
-                suffixIcon: Icon(Icons.search, color: Colors.grey),
-                border: UnderlineInputBorder(
+                fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
+                suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                border: const UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide.none),
                 hintText: 'Search'.tr,
@@ -672,6 +670,7 @@ class CountryCategoryView extends GetView<HomeController> {
                           scrollable: true,
                           itemBuilder: (context, index) => SkeletonListTile(
                             hasSubtitle: false,
+                            leadingStyle: const SkeletonAvatarStyle(width: 60),
                           ),
                         ),
                         child: const Text("Loading..."));
@@ -697,9 +696,9 @@ class CountryCategoryView extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           isOnline
-                              ? SizedBox()
+                              ? const SizedBox()
                               : DelayedDisplay(
-                                  delay: Duration(seconds: 1),
+                                  delay: const Duration(seconds: 1),
                                   child: Container(
                                     color: Colors.red,
                                     width: double.infinity,
@@ -828,8 +827,9 @@ class CountriesCategoryList extends StatelessWidget {
                               fetchCountries(http.Client());
                         },
                         icon: contHome.favArray.contains(countries[index].name)
-                            ? Icon(Icons.favorite, color: Color(0xFFF2B538))
-                            : Icon(Icons.favorite_border)),
+                            ? const Icon(Icons.favorite,
+                                color: Color(0xFFF2B538))
+                            : const Icon(Icons.favorite_border)),
                   ));
             },
           )

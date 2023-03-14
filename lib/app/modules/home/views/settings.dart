@@ -36,7 +36,7 @@ class SettingsView extends GetView<HomeController> {
                         ),
                         children: [
                           RadioListTile(
-                            activeColor: Color(0xFFF2B538),
+                            activeColor: const Color(0xFFF2B538),
                             title: Text("English".tr),
                             value: "en",
                             groupValue: contHome.langui.value,
@@ -50,7 +50,7 @@ class SettingsView extends GetView<HomeController> {
                             },
                           ),
                           RadioListTile(
-                            activeColor: Color(0xFFF2B538),
+                            activeColor: const Color(0xFFF2B538),
                             title: Text(
                               "French".tr,
                             ),
@@ -66,7 +66,7 @@ class SettingsView extends GetView<HomeController> {
                             },
                           ),
                           RadioListTile(
-                            activeColor: Color(0xFFF2B538),
+                            activeColor: const Color(0xFFF2B538),
                             title: Text("Spanish".tr),
                             value: "es",
                             groupValue: contHome.langui.value,
@@ -83,7 +83,7 @@ class SettingsView extends GetView<HomeController> {
                       );
                     }));
           },
-          leading: Icon(Icons.language),
+          leading: const Icon(Icons.language),
           title: Text('Languages'.tr),
         ),
         ListTile(
@@ -98,7 +98,7 @@ class SettingsView extends GetView<HomeController> {
                 contHome.darkMode.value = true;
               }
             },
-            leading: Icon(Icons.color_lens_outlined),
+            leading: const Icon(Icons.color_lens_outlined),
             title: Text('Dark theme'.tr),
             trailing:
                 // IconButton(
@@ -112,7 +112,7 @@ class SettingsView extends GetView<HomeController> {
                 Obx(
               () => Switch(
                 value: contHome.darkMode.value,
-                activeColor: Color(0xFFF2B538),
+                activeColor: const Color(0xFFF2B538),
                 onChanged: (value) {
                   if (Get.isDarkMode) {
                     box.write("theme", false);
@@ -133,7 +133,7 @@ class SettingsView extends GetView<HomeController> {
 https://drive.google.com/drive/folders/1TzK3KVLNjSReEmJaYOePnGf8wMkbaref?usp=share_link""",
             );
           },
-          leading: Icon(
+          leading: const Icon(
             Icons.share_outlined,
           ),
           title: Text("Share the app".tr),

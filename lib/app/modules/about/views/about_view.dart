@@ -10,7 +10,7 @@ class AboutView extends GetView<AboutController> {
   const AboutView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var hid_img = box.read("langui") == null
+    var hidImg = box.read("langui") == null
         ? "pictures/english_hidden_black.png".obs
         : box.read("langui") == "fr"
             ? "pictures/french_hidden_black.png".obs
@@ -45,7 +45,7 @@ It displays all country in the world and make it possible to have the main infor
                 )),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5),
-              child: Obx(() => Image.asset(hid_img.value)),
+              child: Obx(() => Image.asset(hidImg.value)),
             ),
             const SizedBox(height: 20),
             Text("Developer information".tr,
@@ -62,7 +62,7 @@ It displays all country in the world and make it possible to have the main infor
                 size: 28,
                 color: Color(0xFFF2B538),
               ),
-              title: Text("Yao dabara mickael"),
+              title: const Text("Yao dabara mickael"),
               subtitle: const Text('+2250779549937'),
               trailing: IconButton(
                   icon: const Icon(

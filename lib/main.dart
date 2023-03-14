@@ -9,7 +9,7 @@ import 'languages.dart';
 void main() async {
   await GetStorage.init();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
 
     box.read("favsCountries") ?? box.write("favsCountries", []);
 
-    print(Get.deviceLocale);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       translations: Languages(),

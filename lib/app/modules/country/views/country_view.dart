@@ -32,7 +32,6 @@ class CountryView extends GetView<CountryController> {
   @override
   Widget build(BuildContext context) {
     var argCapital = "".obs;
-    var argContinent = "".obs;
 
     var listener =
         InternetConnectionCheckerPlus().onStatusChange.listen((status) async {
@@ -44,7 +43,6 @@ class CountryView extends GetView<CountryController> {
           break;
         case InternetConnectionStatus.disconnected:
           contCountry.checkInternet.value = false;
-          print('You are disconnected from the internet.');
           break;
       }
     });
@@ -80,7 +78,7 @@ class CountryView extends GetView<CountryController> {
                     height: MediaQuery.of(context).size.height * 0.325,
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Column(
                           children: [
                             SizedBox(
@@ -96,8 +94,9 @@ class CountryView extends GetView<CountryController> {
                                                       height: 200, width: 300)),
                                               child: Text("Loading...")),
                                   errorWidget: (context, url, error) =>
-                                      const Icon(Icons.person_outline,
-                                          size: 160, color: Color(0XFF1F1F30)),
+                                      Image.asset(
+                                          "pictures/default_country.png",
+                                          fit: BoxFit.fill),
                                 ) //load image from file
                                 ),
                           ],
@@ -111,7 +110,7 @@ class CountryView extends GetView<CountryController> {
                       child: ListTile(
                         onTap: () {},
                         title: Text(contCountry.utf(args['countryName']),
-                            style: TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20)),
                         subtitle: Text("Name".tr),
                       ),
                     ),
@@ -139,21 +138,21 @@ class CountryView extends GetView<CountryController> {
                                           contCountry.utf(langui.value == "en"
                                               ? args['capital'][0]
                                               : argCapital.value),
-                                          style: TextStyle(fontSize: 20)),
+                                          style: const TextStyle(fontSize: 20)),
                                     ),
                                   ),
                                 ),
                                 subtitle: Text("Capital".tr)),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Card(
                       child: ListTile(
                         onTap: () {},
                         title: Text(contCountry.utf(args['continent']).tr,
-                            style: TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20)),
                         subtitle: Text("Continent".tr),
                       ),
                     ),
@@ -202,7 +201,8 @@ class CountryView extends GetView<CountryController> {
                                                             .width)),
                                             child: Text(
                                                 "${contCountry.utf(langui.value == "en" ? value.value['name'] : argCurrency.value)} (${contCountry.utf(value.value['symbol'])})",
-                                                style: TextStyle(fontSize: 20)),
+                                                style: const TextStyle(
+                                                    fontSize: 20)),
                                           ),
                                         ),
                                       ),
@@ -213,7 +213,7 @@ class CountryView extends GetView<CountryController> {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Card(
@@ -221,7 +221,7 @@ class CountryView extends GetView<CountryController> {
                         onTap: () {},
                         title: Text(
                             "${args['tld'][0]} (www.example${args['tld'][0]} )",
-                            style: TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20)),
                         subtitle: Text("Top level domain".tr),
                       ),
                     ),
@@ -232,7 +232,7 @@ class CountryView extends GetView<CountryController> {
                       child: ListTile(
                         onTap: () {},
                         title: Text("${args['population']} ${'residents'.tr}",
-                            style: TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20)),
                         subtitle: Text("Population".tr),
                       ),
                     ),
@@ -281,7 +281,8 @@ class CountryView extends GetView<CountryController> {
                                                             .width)),
                                             child: Text(
                                                 "${contCountry.utf(langui.value == "en" ? value.value : argLanguage.value)} (${contCountry.utf(value.key)})",
-                                                style: TextStyle(fontSize: 20)),
+                                                style: const TextStyle(
+                                                    fontSize: 20)),
                                           ),
                                         ),
                                       ),
@@ -292,7 +293,7 @@ class CountryView extends GetView<CountryController> {
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   args['dialingCode']["root"] != null
                       ? Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -301,12 +302,12 @@ class CountryView extends GetView<CountryController> {
                               onTap: () {},
                               title: Text(
                                   "${args['dialingCode']['root']}${args['dialingCode']['suffixes'][0]}",
-                                  style: TextStyle(fontSize: 20)),
+                                  style: const TextStyle(fontSize: 20)),
                               subtitle: Text("Dialing code".tr),
                             ),
                           ),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   args['coatOfArms'] != null
                       ? Column(
                           children: [
@@ -326,14 +327,13 @@ class CountryView extends GetView<CountryController> {
                                                       width: 200, height: 200)),
                                               child: Text("Loading...")),
                                   errorWidget: (context, url, error) =>
-                                      const Icon(Icons.person_outline,
-                                          size: 160, color: Color(0XFF1F1F30)),
+                                      Image.asset("pictures/default_arms.png"),
                                 ),
                               ),
                             ),
                           ],
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ]),
             Obx(() => contCountry.checkInternet.value == true
                 ? WebViewX(
