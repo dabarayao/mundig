@@ -72,8 +72,7 @@ class CountryView extends GetView<CountryController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFF2B538).withOpacity(0.5)),
+                    decoration: const BoxDecoration(color: Color(0xFFF5D797)),
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.325,
                     child: Column(
