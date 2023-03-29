@@ -90,10 +90,22 @@ class CountryListView extends GetView<HomeController> {
               future: contHome.countryList.value,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset("pictures/no_internet.png"),
-                  );
+                  return Obx(() => contHome.checkInternet.value == false
+                      ? Skeleton(
+                          isLoading: true,
+                          skeleton: SkeletonListView(
+                            scrollable: true,
+                            itemBuilder: (context, index) => SkeletonListTile(
+                              hasSubtitle: false,
+                              leadingStyle:
+                                  const SkeletonAvatarStyle(width: 60),
+                            ),
+                          ),
+                          child: const Text("Loading..."))
+                      : Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Image.asset("pictures/no_internet.png"),
+                        ));
                 } else if (snapshot.hasData) {
                   if (snapshot.data!.isEmpty) {
                     return Skeleton(

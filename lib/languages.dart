@@ -8,6 +8,9 @@ class Languages extends Translations {
           'Check your internet connection': 'Vérifiez votre connexion internet',
           'residents': 'habitants',
           "Hidden feature": 'Fonctionnalité cachée',
+          "Search by dialing code": "Recherche par code téléphonique",
+          "Search by top-level domain":
+              "Recherche par domaine de premier niveau ",
 
           // French translation for about page
           'About': 'A propos',
@@ -67,6 +70,9 @@ Il affiche tous les pays du monde et permet d'avoir les principales informations
           'Check your internet connection': 'Compruebe su conexión a Internet',
           'residents': 'residentes',
           "Hidden feature": 'Función escondida',
+          "Search by dialing code": "Búsqueda por prefijo telefónico",
+          "Search by top-level domain":
+              "Búsqueda por dominio de nivel superior",
 
           // Spanish translation for about page
           'About': 'Información',
@@ -126,6 +132,8 @@ Muestra todos los países del mundo y hace posible tener la información princip
           'Check your internet connection': 'Check your internet connection',
           'residents': 'residents',
           "Hidden feature": 'Hidden feature',
+          "Search by dialing code": "Search by dialing code",
+          "Search by top-level domain": "Search by top-level domain",
 
           // English translation for about page
           'About': 'About',
