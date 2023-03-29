@@ -10,6 +10,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 
 final HomeController contHome = Get.put(HomeController());
 final box = GetStorage();
@@ -617,22 +618,39 @@ class CountryCategoryView extends GetView<HomeController> {
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
-                suffixIcon: const Icon(Icons.search, color: Colors.grey),
-                border: const UnderlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    borderSide: BorderSide.none),
-                hintText: 'Search'.tr,
-              ),
-              onChanged: (content) {
-                contHome.countryCategoryList.value =
-                    fetchCountries(http.Client());
-                contHome.globalSearchCategory.value = content;
-              },
-            ),
+            child: Obx(() => EasyAutocomplete(
+                  controller: TextEditingController(
+                      text: contHome.globalSearchCategory.value),
+                  suggestions: (region.toLowerCase() == "americas"
+                          ? suggestionAmericas
+                          : region.toLowerCase() == "europe"
+                              ? suggestionEurope
+                              : region.toLowerCase() == "africa"
+                                  ? suggestionAfrica
+                                  : region.toLowerCase() == "asia"
+                                      ? suggestionAsia
+                                      : region.toLowerCase() == "oceania"
+                                          ? suggestionOceania
+                                          : region.toLowerCase() == "antarctic"
+                                              ? suggestionAntarctic
+                                              : suggestion)
+                      .toList()
+                      .cast<String>(),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
+                    suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                    border: const UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        borderSide: BorderSide.none),
+                    hintText: 'Search'.tr,
+                  ),
+                  onChanged: (value) {
+                    contHome.countryCategoryList.value =
+                        fetchCountries(http.Client());
+                    contHome.globalSearchCategory.value = value;
+                  },
+                )),
           ),
           Positioned(
             top: 70,
@@ -656,6 +674,8 @@ class CountryCategoryView extends GetView<HomeController> {
                             scrollable: true,
                             itemBuilder: (context, index) => SkeletonListTile(
                               hasSubtitle: false,
+                              leadingStyle:
+                                  const SkeletonAvatarStyle(width: 60),
                             ),
                           ),
                           child: const Text("Loading..."));
@@ -755,8 +775,11 @@ class CountriesCategoryList extends StatelessWidget {
             .contains(
                 contHome.globalSearchCategory.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            contHome.globalSearchCategory.value.toLowerCase() ==
-                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
+            contHome.globalSearchCategory.value.toLowerCase().trim() ==
+                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}" ||
+        country.tld != null &&
+            contHome.globalSearchCategory.value.toLowerCase().trim() ==
+                country.tld[0].toLowerCase().trim());
 
     countries.retainWhere((country) => country.continent
         .toLowerCase()
@@ -833,7 +856,14 @@ class CountriesCategoryList extends StatelessWidget {
                   ));
             },
           )
-        : Center(child: Image.asset("pictures/no_result_en.png"));
+        : Obx(
+            () => Center(
+                child: contHome.langui.value == "fr"
+                    ? Image.asset("pictures/no_result_fr.png")
+                    : contHome.langui.value == "es"
+                        ? Image.asset("pictures/no_result_es.png")
+                        : Image.asset("pictures/no_result_en.png")),
+          );
 
     //  countries[index]
     //         .name

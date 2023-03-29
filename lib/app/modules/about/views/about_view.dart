@@ -11,12 +11,20 @@ class AboutView extends GetView<AboutController> {
   @override
   Widget build(BuildContext context) {
     var hidImg = box.read("langui") == null
-        ? "pictures/english_hidden_black.png".obs
+        ? "pictures/english_hidden1_black.png".obs
         : box.read("langui") == "fr"
-            ? "pictures/french_hidden_black.png".obs
+            ? "pictures/french_hidden1_black.png".obs
             : box.read("langui") == "es"
-                ? "pictures/spanish_hidden_black.png".obs
-                : "pictures/english_hidden_black.png".obs;
+                ? "pictures/spanish_hidden1_black.png".obs
+                : "pictures/english_hidden1_black.png".obs;
+
+    var hidImg2 = box.read("langui") == null
+        ? "pictures/english_hidden2_black.png".obs
+        : box.read("langui") == "fr"
+            ? "pictures/french_hidden2_black.png".obs
+            : box.read("langui") == "es"
+                ? "pictures/spanish_hidden2_black.png".obs
+                : "pictures/english_hidden2_black.png".obs;
 
     return Scaffold(
       appBar: AppBar(
@@ -33,21 +41,11 @@ class AboutView extends GetView<AboutController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                """Mundig is a software created by the developer Yao Dabara Mickael. 
+                  """Mundig is a software created by the developer Yao Dabara Mickael. 
 It displays all country in the world and make it possible to have the main informations about each countries such as the map, the dialing code, the captial..."""
-                    .tr
-                    .tr,
-              ),
+                      .tr),
             ),
-            Text("Hidden feature".tr,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                )),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 5),
-              child: Obx(() => Image.asset(hidImg.value)),
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text("Developer information".tr,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
@@ -72,6 +70,41 @@ It displays all country in the world and make it possible to have the main infor
                   onPressed: () {
                     launchUrl(Uri.parse("mailto:dabarayao@gmail.com"));
                   }),
+            ),
+            const SizedBox(height: 8),
+            Text("Hidden feature".tr,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.10, top: 5),
+                child: Text(
+                  "Search by dialing code".tr,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Obx(() => Image.asset(hidImg.value,
+                  width: MediaQuery.of(context).size.width * 0.80)),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.10, top: 5),
+                child: Text(
+                  "Search by top-level domain".tr,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Obx(() => Image.asset(hidImg2.value,
+                  width: MediaQuery.of(context).size.width * 0.80)),
             )
           ],
         ),

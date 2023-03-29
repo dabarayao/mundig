@@ -11,6 +11,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
+import 'package:country_flags/country_flags.dart';
 
 final translator = GoogleTranslator();
 
@@ -37,12 +38,24 @@ class SettingsView extends GetView<HomeController> {
                         children: [
                           RadioListTile(
                             activeColor: const Color(0xFFF2B538),
-                            title: Text("English".tr),
+                            title: Row(
+                              children: [
+                                CountryFlags.flag(
+                                  'us',
+                                  height: 25,
+                                  width: 25,
+                                  borderRadius: 0,
+                                ),
+                                const SizedBox(width: 5),
+                                Text("English".tr),
+                              ],
+                            ),
                             value: "en",
                             groupValue: contHome.langui.value,
                             onChanged: (value) {
                               box.write("langui", "en");
                               contHome.langui.value = "en";
+                              languiData.value = "en";
                               Get.updateLocale(const Locale('en', 'US'));
                               contHome.countryList.value =
                                   fetchCountries(http.Client());
@@ -50,29 +63,52 @@ class SettingsView extends GetView<HomeController> {
                             },
                           ),
                           RadioListTile(
-                            activeColor: const Color(0xFFF2B538),
-                            title: Text(
-                              "French".tr,
-                            ),
-                            value: "fr",
-                            groupValue: contHome.langui.value,
-                            onChanged: (value) {
-                              box.write("langui", "fr");
-                              contHome.langui.value = "fr";
-                              Get.updateLocale(const Locale('fr', 'FR'));
-                              contHome.countryList.value =
-                                  fetchCountries(http.Client());
-                              Navigator.pop(context);
-                            },
-                          ),
+                              activeColor: const Color(0xFFF2B538),
+                              title: Row(
+                                children: [
+                                  CountryFlags.flag(
+                                    'fr',
+                                    height: 25,
+                                    width: 25,
+                                    borderRadius: 0,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "French".tr,
+                                  ),
+                                ],
+                              ),
+                              value: "fr",
+                              groupValue: contHome.langui.value,
+                              onChanged: (value) {
+                                box.write("langui", "fr");
+                                contHome.langui.value = "fr";
+                                languiData.value = "fr";
+                                Get.updateLocale(const Locale('fr', 'FR'));
+                                contHome.countryList.value =
+                                    fetchCountries(http.Client());
+                                Navigator.pop(context);
+                              }),
                           RadioListTile(
                             activeColor: const Color(0xFFF2B538),
-                            title: Text("Spanish".tr),
+                            title: Row(
+                              children: [
+                                CountryFlags.flag(
+                                  'es',
+                                  height: 25,
+                                  width: 25,
+                                  borderRadius: 0,
+                                ),
+                                const SizedBox(width: 5),
+                                Text("Spanish".tr),
+                              ],
+                            ),
                             value: "es",
                             groupValue: contHome.langui.value,
                             onChanged: (value) {
                               box.write("langui", "es");
                               contHome.langui.value = "es";
+                              languiData.value = "es";
                               Get.updateLocale(const Locale('es', 'US'));
                               contHome.countryList.value =
                                   fetchCountries(http.Client());

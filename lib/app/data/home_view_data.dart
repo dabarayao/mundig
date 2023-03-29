@@ -20,12 +20,50 @@ var nbOceaniaLove = 0.obs;
 var nbAntarctic = 0.obs;
 var nbAntarcticLove = 0.obs;
 
+var languiData = box.read("langui") == null
+    ? "en".obs
+    : box.read("langui") == "fr"
+        ? "fr".obs
+        : box.read("langui") == "es"
+            ? "es".obs
+            : "en".obs;
+
+var suggestion = [].obs;
+var suggestionAmericas = [].obs;
+var suggestionEurope = [].obs;
+var suggestionAfrica = [].obs;
+var suggestionAsia = [].obs;
+var suggestionOceania = [].obs;
+var suggestionAntarctic = [].obs;
+
+String utf(str) {
+  var rt = str;
+  try {
+    rt = utf8.decode(str.runes.toList());
+  } catch (e) {
+    rt = str;
+  }
+
+  return rt;
+}
+
 Future<List<Country>> fetchCountries(http.Client client) async {
   final response =
       await client.get(Uri.parse('https://restcountries.com/v3.1/all'));
 
   // Use the compute function to run parseCountrys in a separate isolate.
   var tray = jsonDecode(response.body).toList();
+
+  tray.sort((a, b) => (utf(languiData.value == "en"
+          ? a['name']['common']
+          : languiData.value == "fr"
+              ? a['translations']['fra']['common']
+              : a['translations']['spa']['common']))
+      .compareTo(utf(languiData.value == "en"
+          ? b['name']['common']
+          : languiData.value == "fr"
+              ? b['translations']['fra']['common']
+              : b['translations']['spa']['common'])));
 
   countCountry(val) =>
       tray.where((row) => (row["region"].toLowerCase() == val)).length;
@@ -53,6 +91,99 @@ Future<List<Country>> fetchCountries(http.Client client) async {
   nbAsiaLove.value = countCountryLove("asia");
   nbOceaniaLove.value = countCountryLove("oceania");
   nbAntarcticLove.value = countCountryLove("antarctic");
+
+  // Global suggestion
+
+  suggester(val) {
+    for (var country in tray) {
+      if (val != "" && val != country["region"].toLowerCase()) {
+        continue;
+      }
+
+      (val == "americas"
+              ? suggestionAmericas
+              : val == "europe"
+                  ? suggestionEurope
+                  : val == "africa"
+                      ? suggestionAfrica
+                      : val == "asia"
+                          ? suggestionAsia
+                          : val == "oceania"
+                              ? suggestionOceania
+                              : val == "antarctic"
+                                  ? suggestionAntarctic
+                                  : suggestion)
+          .add(
+        languiData.value == "en"
+            ? utf(country['name']['common'])
+            : languiData.value == "fr"
+                ? utf(country['translations']['fra']['common'])
+                : utf(country['translations']['spa']['common']),
+      );
+    }
+
+    for (var country in tray) {
+      if (val != "" && val != country["region"].toLowerCase()) {
+        continue;
+      }
+      country['idd']["root"] != null
+          ? (val == "americas"
+                  ? suggestionAmericas
+                  : val == "europe"
+                      ? suggestionEurope
+                      : val == "africa"
+                          ? suggestionAfrica
+                          : val == "asia"
+                              ? suggestionAsia
+                              : val == "oceania"
+                                  ? suggestionOceania
+                                  : val == "antarctic"
+                                      ? suggestionAntarctic
+                                      : suggestion)
+              .add("${country['idd']['root']}${country['idd']['suffixes'][0]}")
+          : "";
+    }
+
+    for (var country in tray) {
+      if (val != "" && val != country["region"].toLowerCase()) {
+        continue;
+      }
+      country['tld'] != null
+          ? (val == "americas"
+                  ? suggestionAmericas
+                  : val == "europe"
+                      ? suggestionEurope
+                      : val == "africa"
+                          ? suggestionAfrica
+                          : val == "asia"
+                              ? suggestionAsia
+                              : val == "oceania"
+                                  ? suggestionOceania
+                                  : val == "antarctic"
+                                      ? suggestionAntarctic
+                                      : suggestion)
+              .add(country['tld'][0])
+          : "";
+    }
+  }
+
+  //Americas suggestion
+  suggestion.clear();
+  suggestionAmericas.clear();
+  suggestionEurope.clear();
+  suggestionAfrica.clear();
+  suggestionAsia.clear();
+  suggestionOceania.clear();
+  suggestionAntarctic.clear();
+
+  suggester("");
+  suggester("americas");
+  suggester("africa");
+  suggester("asia");
+  suggester("oceania");
+  suggester("antarctic");
+
+  print(suggestion);
 
   return compute(parseCountries, response.body);
 }

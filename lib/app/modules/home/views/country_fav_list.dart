@@ -10,6 +10,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:http/http.dart' as http;
 
 final HomeController contHome = Get.put(HomeController());
@@ -47,23 +48,25 @@ class CountryFavListView extends GetView<HomeController> {
           visible: contHome.favArray.length != 0 ? true : false,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: TextField(
-              controller:
-                  TextEditingController(text: contHome.globalSearchFav.value),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
-                suffixIcon: const Icon(Icons.search, color: Colors.grey),
-                border: const UnderlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    borderSide: BorderSide.none),
-                hintText: 'Search'.tr,
-              ),
-              onChanged: (content) {
-                contHome.countryFavList.value = fetchCountries(http.Client());
-                contHome.globalSearchFav.value = content;
-              },
-            ),
+            child: Obx(() => EasyAutocomplete(
+                  controller: TextEditingController(
+                      text: contHome.globalSearchFav.value),
+                  suggestions: suggestion.toList().cast<String>(),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
+                    suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                    border: const UnderlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        borderSide: BorderSide.none),
+                    hintText: 'Search'.tr,
+                  ),
+                  onChanged: (value) {
+                    contHome.countryFavList.value =
+                        fetchCountries(http.Client());
+                    contHome.globalSearchFav.value = value;
+                  },
+                )),
           ),
         ),
         Obx(
@@ -182,8 +185,11 @@ class CountriesFavList extends StatelessWidget {
             .trim()
             .contains(contHome.globalSearchFav.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            contHome.globalSearchFav.value.toLowerCase() ==
-                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
+            contHome.globalSearchFav.value.toLowerCase().trim() ==
+                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}" ||
+        country.tld != null &&
+            contHome.globalSearchFav.value.toLowerCase().trim() ==
+                country.tld[0].toLowerCase().trim());
 
     countries.retainWhere(
         (country) => box.read('favsCountries').contains(country.name));
@@ -244,7 +250,14 @@ class CountriesFavList extends StatelessWidget {
                           color: Color(0xFFF2B538))));
             },
           )
-        : Center(child: Image.asset("pictures/empty_en.png"));
+        : Obx(
+            () => Center(
+                child: contHome.langui.value == "fr"
+                    ? Image.asset("pictures/no_result_fr.png")
+                    : contHome.langui.value == "es"
+                        ? Image.asset("pictures/no_result_es.png")
+                        : Image.asset("pictures/no_result_en.png")),
+          );
 
     //  countries[index]
     //         .name

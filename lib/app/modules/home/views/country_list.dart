@@ -9,10 +9,14 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:translator/translator.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:http/http.dart' as http;
 
 final HomeController contHome = Get.put(HomeController());
 final box = GetStorage();
+
+final translator = GoogleTranslator();
 
 class CountryListView extends GetView<HomeController> {
   CountryListView({Key? key}) : super(key: key);
@@ -37,25 +41,45 @@ class CountryListView extends GetView<HomeController> {
       fit: StackFit.expand,
       children: [
         Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: TextField(
-            controller:
-                TextEditingController(text: contHome.globalSearch.value),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
-              suffixIcon: const Icon(Icons.search, color: Colors.grey),
-              border: const UnderlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  borderSide: BorderSide.none),
-              hintText: 'Search'.tr,
-            ),
-            onChanged: (content) {
-              contHome.countryList.value = fetchCountries(http.Client());
-              contHome.globalSearch.value = content;
-            },
-          ),
-        ),
+            padding: const EdgeInsets.all(15.0),
+            child:
+                // TextField(
+                //   controller:
+                //       TextEditingController(text: contHome.globalSearch.value),
+                //   decoration: InputDecoration(
+                //     filled: true,
+                //     fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
+                //     suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                //     border: const UnderlineInputBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                //         borderSide: BorderSide.none),
+                //     hintText: 'Search'.tr,
+                //   ),
+                //   onChanged: (content) {
+                //     contHome.countryList.value = fetchCountries(http.Client());
+                //     contHome.globalSearch.value = content;
+                //   },
+                // ),
+                Obx(
+              () => EasyAutocomplete(
+                controller:
+                    TextEditingController(text: contHome.globalSearch.value),
+                suggestions: suggestion.toList().cast<String>(),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
+                  suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                  border: const UnderlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      borderSide: BorderSide.none),
+                  hintText: 'Search'.tr,
+                ),
+                onChanged: (value) {
+                  contHome.countryList.value = fetchCountries(http.Client());
+                  contHome.globalSearch.value = value;
+                },
+              ),
+            )),
         Obx(
           () => Positioned(
             top: 70,
@@ -172,8 +196,11 @@ class CountriesList extends StatelessWidget {
             .trim()
             .contains(contHome.globalSearch.value.toLowerCase().trim()) ||
         country.dialingCode["root"] != null &&
-            contHome.globalSearch.value.toLowerCase() ==
-                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}");
+            contHome.globalSearch.value.toLowerCase().trim() ==
+                "${country.dialingCode["root"]}${country.dialingCode['suffixes'][0]}" ||
+        country.tld != null &&
+            contHome.globalSearch.value.toLowerCase().trim() ==
+                country.tld[0].toLowerCase().trim());
 
     return countries.length != 0
         ? ListView.builder(
@@ -242,7 +269,14 @@ class CountriesList extends StatelessWidget {
               );
             },
           )
-        : Center(child: Image.asset("pictures/no_result_en.png"));
+        : Obx(
+            () => Center(
+                child: contHome.langui.value == "fr"
+                    ? Image.asset("pictures/no_result_fr.png")
+                    : contHome.langui.value == "es"
+                        ? Image.asset("pictures/no_result_es.png")
+                        : Image.asset("pictures/no_result_en.png")),
+          );
 
     //  countries[index]
     //         .name
