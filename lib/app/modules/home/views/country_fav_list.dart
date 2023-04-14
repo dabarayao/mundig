@@ -51,8 +51,7 @@ class CountryFavListView extends GetView<HomeController> {
             child: Obx(() => EasyAutocomplete(
                   controller: TextEditingController(
                       text: contHome.globalSearchFav.value),
-                  suggestions:
-                      box.read('favsCountries').toList().cast<String>(),
+                  suggestions: suggestion.toList().cast<String>(),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),

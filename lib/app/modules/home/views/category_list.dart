@@ -842,21 +842,13 @@ class CountriesCategoryList extends StatelessWidget {
                     () => IconButton(
                         onPressed: () {
                           if (contHome.favArray
-                                      .contains(countries[index].name) ==
-                                  false &&
-                              contHome.favArray
-                                      .contains(countries[index].nameFra) ==
-                                  false &&
-                              contHome.favArray
-                                      .contains(countries[index].nameSpa) ==
-                                  false) {
+                                  .contains(countries[index].name) ==
+                              false) {
                             box.write('favsCountries', [
                               ...contHome.favArray,
-                              contHome.langui.value == "en"
-                                  ? utf(countries[index].name)
-                                  : contHome.langui.value == "fr"
-                                      ? utf(countries[index].nameFra)
-                                      : utf(countries[index].nameSpa),
+                              countries[index].name,
+                              countries[index].nameFra,
+                              countries[index].nameSpa,
                             ]);
                             contHome.favArray.value = [
                               ...box.read('favsCountries')
