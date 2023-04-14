@@ -182,8 +182,9 @@ Future<List<Country>> fetchCountries(http.Client client) async {
   suggester("asia");
   suggester("oceania");
   suggester("antarctic");
+  suggester("favs");
 
-  print(suggestion);
+  print(box.read('favsCountries'));
 
   return compute(parseCountries, response.body);
 }

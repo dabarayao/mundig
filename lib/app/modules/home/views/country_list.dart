@@ -258,15 +258,23 @@ class CountriesList extends StatelessWidget {
                     onPressed: () {
                       if (contHome.favArray.contains(countries[index].name) ==
                           false) {
-                        box.write('favsCountries',
-                            [...contHome.favArray, countries[index].name]);
+                        box.write('favsCountries', [
+                          ...contHome.favArray,
+                          countries[index].name,
+                          countries[index].nameFra,
+                          countries[index].nameFra,
+                          countries[index].tld != null &&
+                              countries[index].tld[0],
+                        ]);
                         contHome.favArray.value = [
                           ...box.read('favsCountries')
                         ];
                       } else {
                         var favs = box.read('favsCountries');
-                        favs.removeWhere(
-                            (item) => item == countries[index].name);
+                        favs.removeWhere((item) =>
+                            item == countries[index].name ||
+                            item == countries[index].nameFra ||
+                            item == countries[index].nameSpa);
                         box.write('favsCountries', [...favs]);
                         contHome.favArray.value = [
                           ...box.read('favsCountries')

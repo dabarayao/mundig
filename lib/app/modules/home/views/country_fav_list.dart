@@ -51,7 +51,8 @@ class CountryFavListView extends GetView<HomeController> {
             child: Obx(() => EasyAutocomplete(
                   controller: TextEditingController(
                       text: contHome.globalSearchFav.value),
-                  suggestions: suggestion.toList().cast<String>(),
+                  suggestions:
+                      box.read('favsCountries').toList().cast<String>(),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xFFDCDCDC).withOpacity(0.2),
@@ -249,8 +250,10 @@ class CountriesFavList extends StatelessWidget {
                   trailing: IconButton(
                       onPressed: () {
                         var favs = box.read('favsCountries');
-                        favs.removeWhere(
-                            (item) => item == countries[index].name);
+                        favs.removeWhere((item) =>
+                            item == countries[index].name ||
+                            item == countries[index].nameFra ||
+                            item == countries[index].nameSpa);
                         box.write('favsCountries', [...favs]);
                         contHome.favArray.value = [
                           ...box.read('favsCountries')
