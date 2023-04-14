@@ -257,12 +257,20 @@ class CountriesList extends StatelessWidget {
                 trailing: Obx(() => IconButton(
                     onPressed: () {
                       if (contHome.favArray.contains(countries[index].name) ==
-                          false) {
+                              false &&
+                          contHome.favArray
+                                  .contains(countries[index].nameFra) ==
+                              false &&
+                          contHome.favArray
+                                  .contains(countries[index].nameSpa) ==
+                              false) {
                         box.write('favsCountries', [
                           ...contHome.favArray,
-                          countries[index].name,
-                          countries[index].nameFra,
-                          countries[index].nameSpa,
+                          contHome.langui.value == "en"
+                              ? countries[index].name
+                              : contHome.langui.value == "fr"
+                                  ? countries[index].nameFra
+                                  : countries[index].nameSpa,
                         ]);
                         contHome.favArray.value = [
                           ...box.read('favsCountries')
@@ -281,7 +289,10 @@ class CountriesList extends StatelessWidget {
                       contHome.countryList.value =
                           fetchCountries(http.Client());
                     },
-                    icon: contHome.favArray.contains(countries[index].name)
+                    icon: contHome.favArray.contains(countries[index].name) ||
+                            contHome.favArray
+                                .contains(countries[index].nameFra) ||
+                            contHome.favArray.contains(countries[index].nameSpa)
                         ? const Icon(Icons.favorite, color: Color(0xFFF2B538))
                         : const Icon(Icons.favorite_border))),
               );

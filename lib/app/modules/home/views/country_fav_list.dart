@@ -204,8 +204,10 @@ class CountriesFavList extends StatelessWidget {
             contHome.globalSearchFav.value.toLowerCase().trim() ==
                 country.tld[0].toLowerCase().trim());
 
-    countries.retainWhere(
-        (country) => box.read('favsCountries').contains(country.name));
+    countries.retainWhere((country) =>
+        box.read('favsCountries').contains(country.name) ||
+        box.read('favsCountries').contains(country.nameFra) ||
+        box.read('favsCountries').contains(country.nameSpa));
 
     return countries.length != 0
         ? ListView.builder(
