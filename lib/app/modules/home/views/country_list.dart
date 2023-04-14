@@ -262,9 +262,7 @@ class CountriesList extends StatelessWidget {
                           ...contHome.favArray,
                           countries[index].name,
                           countries[index].nameFra,
-                          countries[index].nameFra,
-                          countries[index].tld != null &&
-                              countries[index].tld[0],
+                          countries[index].nameSpa,
                         ]);
                         contHome.favArray.value = [
                           ...box.read('favsCountries')
