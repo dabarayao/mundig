@@ -853,10 +853,10 @@ class CountriesCategoryList extends StatelessWidget {
                             box.write('favsCountries', [
                               ...contHome.favArray,
                               contHome.langui.value == "en"
-                                  ? countries[index].name
+                                  ? utf(countries[index].name)
                                   : contHome.langui.value == "fr"
-                                      ? countries[index].nameFra
-                                      : countries[index].nameSpa,
+                                      ? utf(countries[index].nameFra)
+                                      : utf(countries[index].nameSpa),
                             ]);
                             contHome.favArray.value = [
                               ...box.read('favsCountries')
