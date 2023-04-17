@@ -335,16 +335,18 @@ class CountryView extends GetView<CountryController> {
                       : const SizedBox(),
                 ]),
             Obx(() => contCountry.checkInternet.value == true
-                ? WebViewX(
-                    initialContent: args['maps'],
-                    initialSourceType: SourceType.url,
-                    onWebViewCreated: (controller) =>
-                        webviewController = controller,
-                    height: 400,
-                    width: MediaQuery.of(context).size.width,
-                    onPageFinished: (finish) {
-                      //reading response on finish
-                    },
+                ? IgnorePointer(
+                    child: WebViewX(
+                      initialContent: args['maps'],
+                      initialSourceType: SourceType.url,
+                      onWebViewCreated: (controller) =>
+                          webviewController = controller,
+                      height: 400,
+                      width: MediaQuery.of(context).size.width,
+                      onPageFinished: (finish) {
+                        //reading response on finish
+                      },
+                    ),
                   )
                 : Card(
                     color: Colors.red,

@@ -61,7 +61,7 @@ It displays all country in the world and make it possible to have the main infor
                 color: Color(0xFFF2B538),
               ),
               title: const Text("Yao dabara mickael"),
-              subtitle: const Text('+2250779549937'),
+              subtitle: const Text('+225 0779549937'),
               trailing: IconButton(
                   icon: const Icon(
                     Icons.mail,
