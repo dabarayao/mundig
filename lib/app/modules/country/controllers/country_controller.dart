@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mundig/app/data/home_view_data.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 final box = GetStorage();
 
@@ -12,14 +13,6 @@ class CountryController extends GetxController {
 
   var checkInternet = true.obs;
   var favArray = [...box.read('favsCountries')].obs;
-
-  var langui = box.read("langui") == null
-      ? "en".obs
-      : box.read("langui") == "fr"
-          ? "fr".obs
-          : box.read("langui") == "es"
-              ? "es".obs
-              : "en".obs;
 
   var countryList = fetchCountries(http.Client()).obs;
 

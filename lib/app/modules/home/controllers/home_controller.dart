@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:mundig/app/data/home_view_data.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 
 final box = GetStorage();
+var sysLng = Platform.localeName.split('_')[0];
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -20,7 +22,9 @@ class HomeController extends GetxController {
       : false.obs;
 
   var langui = box.read("langui") == null
-      ? "en".obs
+      ? sysLng != "fr" && sysLng != "es"
+          ? "en".obs
+          : sysLng.obs
       : box.read("langui") == "fr"
           ? "fr".obs
           : box.read("langui") == "es"

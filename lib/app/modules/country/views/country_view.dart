@@ -11,16 +11,20 @@ import 'package:skeletons/skeletons.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:translator/translator.dart';
+import 'dart:io';
 
 final CountryController contCountry = Get.put(CountryController());
 late WebViewXController webviewController;
 
 final translator = GoogleTranslator();
+var sysLng = Platform.localeName.split('_')[0];
 
 class CountryView extends GetView<CountryController> {
   CountryView({Key? key}) : super(key: key);
   var langui = box.read("langui") == null
-      ? "en".obs
+      ? sysLng != "fr" && sysLng != "es"
+          ? "en".obs
+          : sysLng.obs
       : box.read("langui") == "fr"
           ? "fr".obs
           : box.read("langui") == "es"
