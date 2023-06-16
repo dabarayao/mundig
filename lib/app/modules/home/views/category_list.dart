@@ -578,8 +578,8 @@ class CategoryListView extends GetView<HomeController> {
                                 child: Container(
                                   color: Colors.red,
                                   width: double.infinity,
-                                  child: const Text(
-                                    "Check your internet connection",
+                                  child: Text(
+                                    "Check your internet connection".tr,
                                     style: TextStyle(color: Colors.white),
                                     textAlign: TextAlign.center,
                                   ),

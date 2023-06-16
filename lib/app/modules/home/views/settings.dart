@@ -36,33 +36,35 @@ class SettingsView extends GetView<HomeController> {
                           "Choose a language".tr,
                         ),
                         children: [
-                          RadioListTile(
-                            activeColor: const Color(0xFFF2B538),
-                            title: Row(
-                              children: [
-                                CountryFlags.flag(
-                                  'us',
-                                  height: 25,
-                                  width: 25,
-                                  borderRadius: 0,
-                                ),
-                                const SizedBox(width: 5),
-                                Text("English".tr),
-                              ],
+                          Obx(
+                            () => RadioListTile(
+                              activeColor: const Color(0xFFF2B538),
+                              title: Row(
+                                children: [
+                                  CountryFlags.flag(
+                                    'us',
+                                    height: 25,
+                                    width: 25,
+                                    borderRadius: 0,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text("English".tr),
+                                ],
+                              ),
+                              value: "en",
+                              groupValue: contHome.langui.value,
+                              onChanged: (value) {
+                                box.write("langui", "en");
+                                contHome.langui.value = "en";
+                                languiData.value = "en";
+                                Get.updateLocale(const Locale('en', 'US'));
+                                contHome.countryList.value =
+                                    fetchCountries(http.Client());
+                                Navigator.pop(context);
+                              },
                             ),
-                            value: "en",
-                            groupValue: contHome.langui.value,
-                            onChanged: (value) {
-                              box.write("langui", "en");
-                              contHome.langui.value = "en";
-                              languiData.value = "en";
-                              Get.updateLocale(const Locale('en', 'US'));
-                              contHome.countryList.value =
-                                  fetchCountries(http.Client());
-                              Navigator.pop(context);
-                            },
                           ),
-                          RadioListTile(
+                          Obx(() => RadioListTile(
                               activeColor: const Color(0xFFF2B538),
                               title: Row(
                                 children: [
@@ -88,33 +90,33 @@ class SettingsView extends GetView<HomeController> {
                                 contHome.countryList.value =
                                     fetchCountries(http.Client());
                                 Navigator.pop(context);
-                              }),
-                          RadioListTile(
-                            activeColor: const Color(0xFFF2B538),
-                            title: Row(
-                              children: [
-                                CountryFlags.flag(
-                                  'es',
-                                  height: 25,
-                                  width: 25,
-                                  borderRadius: 0,
+                              })),
+                          Obx(() => RadioListTile(
+                                activeColor: const Color(0xFFF2B538),
+                                title: Row(
+                                  children: [
+                                    CountryFlags.flag(
+                                      'es',
+                                      height: 25,
+                                      width: 25,
+                                      borderRadius: 0,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text("Spanish".tr),
+                                  ],
                                 ),
-                                const SizedBox(width: 5),
-                                Text("Spanish".tr),
-                              ],
-                            ),
-                            value: "es",
-                            groupValue: contHome.langui.value,
-                            onChanged: (value) {
-                              box.write("langui", "es");
-                              contHome.langui.value = "es";
-                              languiData.value = "es";
-                              Get.updateLocale(const Locale('es', 'US'));
-                              contHome.countryList.value =
-                                  fetchCountries(http.Client());
-                              Navigator.pop(context);
-                            },
-                          )
+                                value: "es",
+                                groupValue: contHome.langui.value,
+                                onChanged: (value) {
+                                  box.write("langui", "es");
+                                  contHome.langui.value = "es";
+                                  languiData.value = "es";
+                                  Get.updateLocale(const Locale('es', 'US'));
+                                  contHome.countryList.value =
+                                      fetchCountries(http.Client());
+                                  Navigator.pop(context);
+                                },
+                              ))
                         ],
                       );
                     }));
