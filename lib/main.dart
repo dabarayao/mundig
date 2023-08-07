@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
     final box = GetStorage();
     var sysLng = Platform.localeName.split('_')[0];
 
-    var darkMode = box.read("theme") == null ? false : box.read("theme");
+    var darkMode = box.read("theme") != null
+        ? box.read("theme")
+            ? true.obs
+            : false.obs
+        : false.obs;
     var langui = box.read("langui") == null
         ? (sysLng == "fr"
             ? const Locale('fr', 'FR')
@@ -40,7 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: Languages(),
       locale: langui,
-      theme: darkMode ? ThemeData.dark() : ThemeData.light(),
+      theme: darkMode.value == true ? ThemeData.dark() : ThemeData.light(),
       title: "Mundig",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

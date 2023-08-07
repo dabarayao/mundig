@@ -12,6 +12,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:country_flags/country_flags.dart';
+import 'package:restart_app/restart_app.dart';
 
 final translator = GoogleTranslator();
 
@@ -125,15 +126,17 @@ class SettingsView extends GetView<HomeController> {
           title: Text('Languages'.tr),
         ),
         ListTile(
-            onTap: () {
+            onTap: () async {
               if (Get.isDarkMode) {
                 box.write("theme", false);
                 Get.changeTheme(ThemeData.light());
                 contHome.darkMode.value = false;
+                await Get.forceAppUpdate();
               } else {
                 box.write("theme", true);
                 Get.changeTheme(ThemeData.dark());
                 contHome.darkMode.value = true;
+                await Get.forceAppUpdate();
               }
             },
             leading: const Icon(Icons.color_lens_outlined),
@@ -151,15 +154,17 @@ class SettingsView extends GetView<HomeController> {
               () => Switch(
                 value: contHome.darkMode.value,
                 activeColor: const Color(0xFFF2B538),
-                onChanged: (value) {
+                onChanged: (value) async {
                   if (Get.isDarkMode) {
                     box.write("theme", false);
                     Get.changeTheme(ThemeData.light());
                     contHome.darkMode.value = false;
+                    await Get.forceAppUpdate();
                   } else {
                     box.write("theme", true);
                     Get.changeTheme(ThemeData.dark());
                     contHome.darkMode.value = true;
+                    await Get.forceAppUpdate();
                   }
                 },
               ),
