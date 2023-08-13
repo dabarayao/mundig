@@ -24,7 +24,7 @@ dependencies:
   get_storage: ^2.1.1
   share_plus: ^6.3.1
   stroke_text: ^0.0.2
-  url_launcher: ^6.1.10
+  url_launcher: ^6.1.10 # Ios configuration not yet done
   easy_splash_screen: ^1.0.4
   flare_splash_screen: ^4.0.0
   splash_view: ^2.0.1
@@ -32,7 +32,6 @@ dependencies:
   delayed_display: ^2.0.0
   country_flags: ^1.1.1
   easy_autocomplete: ^1.6.0
-  restart_app: ^1.1.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

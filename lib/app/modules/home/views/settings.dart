@@ -12,7 +12,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:country_flags/country_flags.dart';
-import 'package:restart_app/restart_app.dart';
 
 final translator = GoogleTranslator();
 
