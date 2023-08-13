@@ -170,7 +170,7 @@ class CountryFavListView extends GetView<HomeController> {
 }
 
 class CountriesFavList extends StatelessWidget {
-  CountriesFavList({super.key, required this.countries});
+  CountriesFavList({required this.countries});
 
   List<Country> countries;
 

@@ -28,6 +28,7 @@ class AboutView extends GetView<AboutController> {
 
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Text('About'.tr),
         centerTitle: true,
         backgroundColor: const Color(0xFF63308E),

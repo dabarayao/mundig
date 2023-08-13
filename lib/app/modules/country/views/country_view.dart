@@ -63,6 +63,7 @@ class CountryView extends GetView<CountryController> {
 
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Text(contCountry.utf(args['countryName'])),
         centerTitle: true,
         backgroundColor: const Color(0xFF63308E),

@@ -28,6 +28,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: const Text('Mundig'),
         centerTitle: true,
         backgroundColor: const Color(0xFF63308E),

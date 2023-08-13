@@ -41,7 +41,7 @@ class SettingsView extends GetView<HomeController> {
                               activeColor: const Color(0xFFF2B538),
                               title: Row(
                                 children: [
-                                  CountryFlags.flag(
+                                  CountryFlag.fromCountryCode(
                                     'us',
                                     height: 25,
                                     width: 25,
@@ -68,7 +68,7 @@ class SettingsView extends GetView<HomeController> {
                               activeColor: const Color(0xFFF2B538),
                               title: Row(
                                 children: [
-                                  CountryFlags.flag(
+                                  CountryFlag.fromCountryCode(
                                     'fr',
                                     height: 25,
                                     width: 25,
@@ -95,7 +95,7 @@ class SettingsView extends GetView<HomeController> {
                                 activeColor: const Color(0xFFF2B538),
                                 title: Row(
                                   children: [
-                                    CountryFlags.flag(
+                                    CountryFlag.fromCountryCode(
                                       'es',
                                       height: 25,
                                       width: 25,

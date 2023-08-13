@@ -181,7 +181,7 @@ class CountryListView extends GetView<HomeController> {
 }
 
 class CountriesList extends StatelessWidget {
-  CountriesList({super.key, required this.countries});
+  CountriesList({required this.countries});
 
   List<Country> countries;
 

@@ -755,8 +755,7 @@ class CountryCategoryView extends GetView<HomeController> {
 }
 
 class CountriesCategoryList extends StatelessWidget {
-  CountriesCategoryList(
-      {super.key, required this.countries, required this.region});
+  CountriesCategoryList({required this.countries, required this.region});
 
   List<Country> countries;
   var countries2;
